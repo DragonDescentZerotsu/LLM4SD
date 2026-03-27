@@ -1,0 +1,56 @@
+rule_name,rule_description,source,dataset,subtask,knowledge_type,mean_importance,std_importance,rank
+carbon_atom_count,Total carbon atom count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0978417255830649,0.003874515006498232,1
+molar_refractivity,Wildman-Crippen molar refractivity.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.08854908616485267,0.002569961540546704,2
+logp,Wildman-Crippen logP.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.07728695575916625,0.0011164824182173338,3
+pgp_flowchart_high_likelihood,Composite flag implementing the simplified DeepResearch flowchart high-likelihood branch.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.06427931927681421,0.006261721751576039,4
+hydrophobic_large_molecule,Composite flag: molecular weight >= 300 and logP >= 3.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.05400919805877975,0.0048955908724754435,5
+heavy_atom_count,Heavy atom count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.05351698921639912,0.004406340406918803,6
+exact_mol_weight,Exact molecular weight (Descriptors.ExactMolWt).,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0520144233324389,0.0039723175322533815,7
+mol_weight,Molecular weight (Descriptors.MolWt).,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.04845922440311299,0.00480975825895821,8
+carbon_heavy_atom_fraction,Carbon atom fraction among heavy atoms.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.03536814430376335,0.000764535489831122,9
+aromatic_ring_count,Aromatic ring count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.033336835626853065,0.0027410266221449806,10
+aromatic_atom_fraction,Aromatic atom fraction among heavy atoms.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.02738945471643784,0.0012640373048630952,11
+logp_le_3,Rule flag: logP <= 3.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.026828950076870174,0.000773015997822454,12
+logp_ge_3,Rule flag: logP >= 3.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.02634840627602327,0.0032224505497908933,13
+fraction_csp3,Fraction of sp3 carbons.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.024732511210976593,0.0007300557853377163,14
+rotatable_bonds,Rotatable bond count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.02275333986295059,0.0005275565169740698,15
+tpsa,Topological polar surface area.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.020439738811453494,0.0004942927024235074,16
+bulky_hydrophobic_moiety_present,"Heuristic flag for adamantane-like, long-alkyl, or multi-aromatic bulky hydrophobes.",pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.019483292847860968,0.0003383208093594406,17
+base_protonated_fraction_ph74,Estimated protonated fraction for the dominant basic site at pH 7.4.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.01912253538542561,0.00014066491483732626,18
+mw_ge_300,Rule flag: molecular weight >= 300.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.018785426274272498,0.004251576998608706,19
+ring_count,Total ring count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.01872525381396491,0.0011164962826875477,20
+mw_lt_300,Rule flag: molecular weight < 300.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.01539977255477316,0.002106269667205533,21
+total_hbond_donors_acceptors,HBD + HBA total.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.014596682446272968,0.0002997604735856438,22
+aliphatic_ring_count,Aliphatic ring count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.01369130276460796,0.00037691021047090757,23
+aromatic_basic_combo_present,Composite flag: >=2 aromatic rings and at least one basic center.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.012407545102403644,0.0009582309995574414,24
+longest_alkyl_chain,Longest contiguous non-ring sp3 carbon chain length.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.011245173647130251,0.0005684423418251249,25
+oxygen_nitrogen_count,Count of O and N atoms.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.011185084862756092,0.000495509191296133,26
+hba,Hydrogen bond acceptor count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.010681035076598382,0.00044316222398612325,27
+heteroatom_count,Total heteroatom count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.010652949800701104,0.00019944970306367396,28
+hbd,Hydrogen bond donor count.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.009298218617253428,0.00040844119551995526,29
+num_basic_sites,Number of predicted basic sites from the optional MolGpKa helper.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.008769496744759117,0.00027563125266419776,30
+aromatic_ring_count_ge_2,Rule flag: aromatic ring count >= 2.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.008635232300166457,0.0011275346429229748,31
+basic_center_count,Count of amine-like basic or permanently cationic nitrogen centers.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.006975792703327303,0.0002011199882453381,32
+tertiary_amine_count,Count of tertiary amine motifs excluding simple amide-like nitrogens.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0052118697836860866,0.00022622733794365569,33
+fused_aromatic_ring_count,Count of aromatic rings participating in fused aromatic systems.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.004318220122598839,0.0002463658869732968,34
+tertiary_amine_present,Rule flag: at least one tertiary amine motif is present.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.00405900699908992,0.0001901400414016534,35
+basic_center_present,Rule flag: at least one amine-like basic or cationic center is present.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0028690805323022647,0.00018763536726154056,36
+mw_gt_500,Rule flag: molecular weight > 500.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0025120553459953973,0.0005853273174039638,37
+tpsa_gt_75,Rule flag: TPSA > 75.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0023744519962897526,0.00012222193657639467,38
+tpsa_le_75,Rule flag: TPSA <= 75.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0022517788942712684,0.0001280374075746774,39
+oxygen_nitrogen_le_3,Rule flag: O + N <= 3.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0021810494402348716,0.0002558596359609937,40
+oxygen_nitrogen_ge_4,Rule flag: O + N >= 4.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.00196446888659981,0.00022141148751801546,41
+hba_le_2,Rule flag: HBA <= 2.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0017147167932588963,0.0004050525262992862,42
+hba_ge_3,Rule flag: HBA >= 3.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0016871191472382294,0.00021391643313107737,43
+aromatic_linker_count,Count of non-ring bonds directly connecting two aromatic atoms.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0015458224446817793,0.0002314583601362676,44
+hbd_ge_4,Rule flag: HBD >= 4.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0012805324471339438,0.00015692360006787994,45
+hbd_le_3,Rule flag: HBD <= 3.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0011495794539887983,0.00020080136327661302,46
+aromatic_linker_present,Rule flag: at least one direct aromatic linker bond is present.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0010107041129826355,0.00016095794621219517,47
+long_alkyl_chain_ge_6,Rule flag: longest non-ring sp3 carbon chain length >= 6.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0007293621732178538,6.900882596236475e-05,48
+negative_formal_atom_count,Number of atoms with negative formal charge.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.00012259400949425045,4.5326934740402966e-05,49
+cationic_center_present,Rule flag: at least one atom carries positive formal charge.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.00010640659744830276,1.6132180198011712e-05,50
+positive_formal_atom_count,Number of atoms with positive formal charge.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0001020831972561883,2.7111428249085806e-05,51
+adamantane_like_present,1 if an adamantane-like cage motif is present.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0,0.0,52
+formal_charge,Formal charge from the input graph.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0,0.0,53
+pka_features_available,1 if optional pKa-derived features were computed.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0,0.0,54
+quaternary_ammonium_count,Count of quaternary ammonium centers.,pgp_broccatelli,TDC,Pgp_Broccatelli,synthesize,0.0,0.0,55
