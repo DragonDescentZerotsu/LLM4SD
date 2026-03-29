@@ -1,0 +1,416 @@
+rule_name,rule_description,source,dataset,subtask,knowledge_type,seed,importance
+tpsa,Topological polar surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.043644552490610326
+exact_mol_weight,Exact molecular weight (Descriptors.ExactMolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.04083506564964318
+mol_weight,Molecular weight (Descriptors.MolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.04047795803040634
+labute_asa,Labute approximate surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.038514472765414934
+estimated_logd_ph74,Estimated logD at pH 7.4 from logP and neutral fraction.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.03679418923743937
+charged_fraction_ph74,1 - neutral_fraction_ph74.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.036425352914027834
+logp,Wildman-Crippen logP.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.03580049305163628
+neutral_fraction_ph74,Estimated neutral fraction at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.03450651828418773
+net_charge_proxy_ph74,Base protonation minus acid deprotonation proxy at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.03431289267789997
+labute_asa_per_heavy_atom,Labute ASA divided by heavy-atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.03426844093459141
+total_atom_count,Total atom count after adding explicit hydrogens as a Ghose-style atom-count proxy.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.032577061618478946
+fraction_csp3,Fraction of sp3 carbons.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.03239453504860722
+molar_refractivity,Wildman-Crippen molar refractivity.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.032303340072784965
+base_protonated_fraction_ph74,Estimated protonated fraction for the dominant basic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.031859489412173626
+aromatic_heavy_atom_fraction,Aromatic atom fraction among heavy atoms.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.031543607296609245
+stereocenter_count,Count of assigned or potential tetrahedral stereocenters.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0300044546042202
+intramolecular_hbond_pair_count,Count of donor-acceptor atom pairs 4-8 bonds apart as a proxy for intramolecular H-bond potential.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.02746101643507161
+heavy_atom_count,Heavy atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.026124438659424428
+acid_deprotonated_fraction_ph74,Estimated deprotonated fraction for the dominant acidic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.025055002542265746
+hbd,Hydrogen bond donor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.02371606071393566
+total_hbond_donors_acceptors,HBD + HBA total.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.023683375265498446
+fraction_csp3_distance_to_0p45,Absolute distance from the oral-bioavailability saturation target 0.45.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.022925448617307026
+aliphatic_ring_count,Aliphatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.019521564638332725
+heteroatom_count,Total heteroatom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.01857997670359186
+rotatable_bonds,Rotatable bond count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.017403428320515207
+hba,Hydrogen bond acceptor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.015409289060184636
+formal_charge,Formal charge from the input graph.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.014958463517495055
+oral_bioavailability_rule_pass_count,"Count of passed composite rules among Lipinski, Veber, Egan, Ghose, Oprea, Rule-of-3, Muegge, and Pfizer 3/75-safe.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.014789408110567228
+abs_formal_charge,Absolute formal charge magnitude.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.014418018063596844
+num_acidic_sites,Number of predicted acidic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.013253656652479533
+num_basic_sites,Number of predicted basic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.012770148921064085
+aromatic_ring_count,Aromatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.009044215413471189
+ghose_mw_in_160_480,Rule flag: 160 < MW < 480.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.008909288917426619
+ring_count,Total ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.008503655200919131
+oprea_rotatable_bonds_in_2_8,Rule flag: 2 < rotatable bonds < 8.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.007575939458573553
+ghose_pass,Composite Ghose filter pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.005538454353060023
+has_amphoteric_sites,1 if both acidic and basic sites are predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0053142067295173625
+hbd_le_3,Rule flag: HBD <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.005162997074830223
+lipinski_violation_count,Number of Lipinski cutoffs violated among MW/logP/HBD/HBA.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.004476461330464107
+mw_le_500,Rule flag: MW <= 500.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.004134464968039963
+intramolecular_hbond_potential_present,1 if the intramolecular H-bond proxy count is non-zero.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.004069481721692946
+fraction_csp3_ge_0p4,Heuristic flag: fractionCSP3 >= 0.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0040225286888587826
+oprea_ring_count_in_1_4,Rule flag: 1 <= ring count <= 4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.003940093157052127
+muegge_pass,Composite Muegge pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.003535289298192123
+moderate_acidic_pka_2_6,Heuristic flag: a predicted acidic site exists and its most acidic pKa is between 2 and 6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0033591697429081117
+lipinski_pass,Composite Lipinski Rule-of-5 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0032324693115361896
+oprea_pass,Composite Oprea lead-like pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.00314104277631096
+stereocenter_count_ge_1,Heuristic flag: at least one stereocenter is present.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0030780886981229246
+any_moderate_pka_2_12,Heuristic flag: at least one predicted acidic/basic site falls in the broad 2-12 oral-ionization window.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0029866140355564704
+oprea_hbd_lt_2,Rule flag: HBD < 2.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.002968845694321729
+moderate_basic_pka_8_12,Heuristic flag: a predicted basic site exists and its most basic pKa is between 8 and 12.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0028059513470698972
+ghose_logp_in_neg0p4_5p6,Rule flag: -0.4 < logP < 5.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0027311760117559726
+oral_bioavailability_screen_pass,"Combined heuristic screen requiring Lipinski, Veber, Egan, Pfizer-safe, aromatic ring <= 3, and either stereochemistry or fractionCSP3 >= 0.4.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0027300549123524076
+muegge_mw_in_200_600,Rule flag: 200 <= MW <= 600.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.002729365167286594
+tpsa_le_150,Rule flag: TPSA <= 150.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.002714536062110403
+hba_le_3,Rule flag: HBA <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.002546458875160373
+logp_le_3,Rule flag: logP <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0025218882366768243
+positive_formal_atom_count,Number of atoms with positive formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.002471001582286691
+mw_le_300,Rule flag: MW <= 300.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.00244757369510159
+fused_aromatic_ring_count,Count of aromatic rings participating in fused aromatic systems.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0024383031304068756
+hbd_le_5,Rule flag: HBD <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0022528784223556984
+pfizer_3_75_safe,Rule flag: not(logP > 3 and TPSA < 75).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.002108520571201166
+ghose_mr_in_40_130,Rule flag: 40 < molar refractivity < 130.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.001998993417185448
+pfizer_3_75_risk,Rule flag: logP > 3 and TPSA < 75.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0018589331229256077
+ionizable_center_present,1 if at least one acidic or basic site is predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0016884891679537074
+muegge_logp_in_neg2_5,Rule flag: -2 <= logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0016668726586628875
+veber_pass,Composite Veber pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0016356091071447441
+oprea_hba_in_2_10,Rule flag: 2 <= HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0014574980120426837
+tpsa_le_140,Rule flag: TPSA <= 140.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0013058260116004688
+rule_of_3_pass,Composite fragment Rule-of-3 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0012936378384955866
+ghose_atom_count_in_20_70,Rule flag: 20 < atom count < 70.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0012024797954073281
+egan_pass,Composite Egan pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0010969071134697458
+negative_formal_atom_count,Number of atoms with negative formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0010265039575779677
+hba_le_10,Rule flag: HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.000978352938064628
+tpsa_le_131p6,Rule flag: TPSA <= 131.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.000954249548485531
+rotatable_bonds_le_10,Rule flag: rotatable bonds <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.000635782600178238
+logp_le_5,Rule flag: logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0004196764205280703
+crystal_packing_risk_proxy,"Empirical proxy for excessive planar aromatic surface using aromaticity, fused aromaticity, and low saturation.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0003324592530660869
+aromatic_ring_count_le_3,Heuristic flag: aromatic ring count <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.00032501204930603805
+logp_le_5p88,Rule flag: logP <= 5.88.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.00017559501361408912
+ring_count_le_7,Rule flag: ring count <= 7.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.00012438707961024532
+pka_features_available,1 if MolGpKa-derived pKa/logD features were computed.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0
+rotatable_bonds_le_15,Rule flag: rotatable bonds <= 15.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,0,0.0
+exact_mol_weight,Exact molecular weight (Descriptors.ExactMolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.04069863356584813
+labute_asa,Labute approximate surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03997283164702374
+tpsa,Topological polar surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.039947637108965574
+mol_weight,Molecular weight (Descriptors.MolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03777873193309692
+logp,Wildman-Crippen logP.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.035981940545332984
+estimated_logd_ph74,Estimated logD at pH 7.4 from logP and neutral fraction.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.035949201750144925
+labute_asa_per_heavy_atom,Labute ASA divided by heavy-atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03555351296039148
+charged_fraction_ph74,1 - neutral_fraction_ph74.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03502912317748711
+net_charge_proxy_ph74,Base protonation minus acid deprotonation proxy at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03399170980228962
+total_atom_count,Total atom count after adding explicit hydrogens as a Ghose-style atom-count proxy.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.033826421079012535
+molar_refractivity,Wildman-Crippen molar refractivity.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.033611725017392985
+neutral_fraction_ph74,Estimated neutral fraction at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03303781557798422
+fraction_csp3,Fraction of sp3 carbons.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03279102753443693
+base_protonated_fraction_ph74,Estimated protonated fraction for the dominant basic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03200189069632998
+aromatic_heavy_atom_fraction,Aromatic atom fraction among heavy atoms.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.03128725722047162
+stereocenter_count,Count of assigned or potential tetrahedral stereocenters.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.027669292837732982
+intramolecular_hbond_pair_count,Count of donor-acceptor atom pairs 4-8 bonds apart as a proxy for intramolecular H-bond potential.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.027614111235394003
+heavy_atom_count,Heavy atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.027458214238243975
+hbd,Hydrogen bond donor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.027203844953063445
+acid_deprotonated_fraction_ph74,Estimated deprotonated fraction for the dominant acidic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.02618417915477755
+fraction_csp3_distance_to_0p45,Absolute distance from the oral-bioavailability saturation target 0.45.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.024264664908977888
+total_hbond_donors_acceptors,HBD + HBA total.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.023124713082428687
+aliphatic_ring_count,Aliphatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.018591810731269108
+heteroatom_count,Total heteroatom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.018014416119068136
+rotatable_bonds,Rotatable bond count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.016717913611064526
+formal_charge,Formal charge from the input graph.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.016010891618677747
+hba,Hydrogen bond acceptor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.015203990987123987
+oral_bioavailability_rule_pass_count,"Count of passed composite rules among Lipinski, Veber, Egan, Ghose, Oprea, Rule-of-3, Muegge, and Pfizer 3/75-safe.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.01498312348242289
+num_acidic_sites,Number of predicted acidic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.014555868424547903
+abs_formal_charge,Absolute formal charge magnitude.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.013008540075680527
+num_basic_sites,Number of predicted basic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.012512067791069205
+aromatic_ring_count,Aromatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.009737148482059527
+ghose_mw_in_160_480,Rule flag: 160 < MW < 480.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.008644228419035642
+ring_count,Total ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.00843625278845426
+oprea_rotatable_bonds_in_2_8,Rule flag: 2 < rotatable bonds < 8.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.007035395414635042
+ghose_pass,Composite Ghose filter pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.006027084840988139
+lipinski_violation_count,Number of Lipinski cutoffs violated among MW/logP/HBD/HBA.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.005716890276721599
+has_amphoteric_sites,1 if both acidic and basic sites are predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0047848835482669685
+hbd_le_3,Rule flag: HBD <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.004751989197048184
+moderate_acidic_pka_2_6,Heuristic flag: a predicted acidic site exists and its most acidic pKa is between 2 and 6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.004455523913715248
+fraction_csp3_ge_0p4,Heuristic flag: fractionCSP3 >= 0.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.004365996773456701
+muegge_pass,Composite Muegge pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.004290444704635466
+mw_le_500,Rule flag: MW <= 500.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.004203821154159183
+oprea_ring_count_in_1_4,Rule flag: 1 <= ring count <= 4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.004105413028170955
+oprea_pass,Composite Oprea lead-like pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.00354551342016117
+lipinski_pass,Composite Lipinski Rule-of-5 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0034821235034675807
+intramolecular_hbond_potential_present,1 if the intramolecular H-bond proxy count is non-zero.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0034135730069811076
+stereocenter_count_ge_1,Heuristic flag: at least one stereocenter is present.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.003274176363627608
+any_moderate_pka_2_12,Heuristic flag: at least one predicted acidic/basic site falls in the broad 2-12 oral-ionization window.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.003129843325853444
+logp_le_3,Rule flag: logP <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0029715551110051225
+moderate_basic_pka_8_12,Heuristic flag: a predicted basic site exists and its most basic pKa is between 8 and 12.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0029677029807935688
+ghose_logp_in_neg0p4_5p6,Rule flag: -0.4 < logP < 5.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0028342983912066693
+fused_aromatic_ring_count,Count of aromatic rings participating in fused aromatic systems.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0025737893620968308
+oral_bioavailability_screen_pass,"Combined heuristic screen requiring Lipinski, Veber, Egan, Pfizer-safe, aromatic ring <= 3, and either stereochemistry or fractionCSP3 >= 0.4.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0025295979623271327
+mw_le_300,Rule flag: MW <= 300.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.002518949643707446
+hbd_le_5,Rule flag: HBD <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.002415651107373047
+tpsa_le_150,Rule flag: TPSA <= 150.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0022206728368482156
+oprea_hbd_lt_2,Rule flag: HBD < 2.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0022060317324139856
+muegge_mw_in_200_600,Rule flag: 200 <= MW <= 600.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.002195315638405109
+hba_le_3,Rule flag: HBA <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.002164277675525092
+positive_formal_atom_count,Number of atoms with positive formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0020723022557918237
+ionizable_center_present,1 if at least one acidic or basic site is predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0018899744162703877
+pfizer_3_75_risk,Rule flag: logP > 3 and TPSA < 75.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0018826895036458428
+ghose_mr_in_40_130,Rule flag: 40 < molar refractivity < 130.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0018708128692327883
+pfizer_3_75_safe,Rule flag: not(logP > 3 and TPSA < 75).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0018293241218825943
+oprea_hba_in_2_10,Rule flag: 2 <= HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0016706230359941328
+hba_le_10,Rule flag: HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0015067022792997146
+veber_pass,Composite Veber pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0013732661536368417
+muegge_logp_in_neg2_5,Rule flag: -2 <= logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0013668287026520046
+tpsa_le_140,Rule flag: TPSA <= 140.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0013332911409342668
+negative_formal_atom_count,Number of atoms with negative formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0012911736458356554
+egan_pass,Composite Egan pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0012282420296633816
+rule_of_3_pass,Composite fragment Rule-of-3 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0011898828307948131
+ghose_atom_count_in_20_70,Rule flag: 20 < atom count < 70.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0011617935985700908
+tpsa_le_131p6,Rule flag: TPSA <= 131.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.000982536445791829
+rotatable_bonds_le_10,Rule flag: rotatable bonds <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.000603789524209051
+crystal_packing_risk_proxy,"Empirical proxy for excessive planar aromatic surface using aromaticity, fused aromaticity, and low saturation.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.000438155840191946
+logp_le_5,Rule flag: logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0003896271128796911
+aromatic_ring_count_le_3,Heuristic flag: aromatic ring count <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0001422860602991946
+logp_le_5p88,Rule flag: logP <= 5.88.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.00011354158557383107
+ring_count_le_7,Rule flag: ring count <= 7.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,8.790937595885524e-05
+pka_features_available,1 if MolGpKa-derived pKa/logD features were computed.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0
+rotatable_bonds_le_15,Rule flag: rotatable bonds <= 15.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,1,0.0
+tpsa,Topological polar surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.04272320024371985
+mol_weight,Molecular weight (Descriptors.MolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.04142140347057952
+exact_mol_weight,Exact molecular weight (Descriptors.ExactMolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.04078279016550599
+estimated_logd_ph74,Estimated logD at pH 7.4 from logP and neutral fraction.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.04015235516253744
+labute_asa,Labute approximate surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03812660953169055
+net_charge_proxy_ph74,Base protonation minus acid deprotonation proxy at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03518123328556246
+logp,Wildman-Crippen logP.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03474886735274707
+total_atom_count,Total atom count after adding explicit hydrogens as a Ghose-style atom-count proxy.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03462484961396361
+labute_asa_per_heavy_atom,Labute ASA divided by heavy-atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03407913282826543
+charged_fraction_ph74,1 - neutral_fraction_ph74.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03378343230677333
+neutral_fraction_ph74,Estimated neutral fraction at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03344176851932406
+aromatic_heavy_atom_fraction,Aromatic atom fraction among heavy atoms.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.031903829094680015
+fraction_csp3,Fraction of sp3 carbons.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.031793501065023454
+molar_refractivity,Wildman-Crippen molar refractivity.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03142554060994808
+stereocenter_count,Count of assigned or potential tetrahedral stereocenters.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.03022338674514681
+base_protonated_fraction_ph74,Estimated protonated fraction for the dominant basic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.028549935174664958
+intramolecular_hbond_pair_count,Count of donor-acceptor atom pairs 4-8 bonds apart as a proxy for intramolecular H-bond potential.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.028135235263281037
+acid_deprotonated_fraction_ph74,Estimated deprotonated fraction for the dominant acidic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.02584431526096366
+hbd,Hydrogen bond donor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.02583647454084226
+fraction_csp3_distance_to_0p45,Absolute distance from the oral-bioavailability saturation target 0.45.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.025340047964604474
+heavy_atom_count,Heavy atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.02523822858063988
+total_hbond_donors_acceptors,HBD + HBA total.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.023029531489937624
+heteroatom_count,Total heteroatom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.019770261034795275
+aliphatic_ring_count,Aliphatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.016929562246429507
+hba,Hydrogen bond acceptor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.016408205763352623
+formal_charge,Formal charge from the input graph.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.016373805372509775
+rotatable_bonds,Rotatable bond count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.016089642847313994
+oral_bioavailability_rule_pass_count,"Count of passed composite rules among Lipinski, Veber, Egan, Ghose, Oprea, Rule-of-3, Muegge, and Pfizer 3/75-safe.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.015445510449910417
+abs_formal_charge,Absolute formal charge magnitude.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.015315563872483283
+num_acidic_sites,Number of predicted acidic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.012413037734860119
+num_basic_sites,Number of predicted basic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.012186412714367847
+ring_count,Total ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.009585726599562378
+aromatic_ring_count,Aromatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.008203953776815242
+ghose_mw_in_160_480,Rule flag: 160 < MW < 480.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.007977249548060755
+oprea_rotatable_bonds_in_2_8,Rule flag: 2 < rotatable bonds < 8.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.00669909031847159
+ghose_pass,Composite Ghose filter pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0049244777781209635
+hbd_le_3,Rule flag: HBD <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004805541588275762
+has_amphoteric_sites,1 if both acidic and basic sites are predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004783411631918767
+mw_le_500,Rule flag: MW <= 500.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004595779592650287
+moderate_acidic_pka_2_6,Heuristic flag: a predicted acidic site exists and its most acidic pKa is between 2 and 6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004431091056709795
+lipinski_violation_count,Number of Lipinski cutoffs violated among MW/logP/HBD/HBA.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004311515312028882
+fraction_csp3_ge_0p4,Heuristic flag: fractionCSP3 >= 0.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004228886503697425
+muegge_pass,Composite Muegge pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004203779113273581
+lipinski_pass,Composite Lipinski Rule-of-5 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.004052845282440484
+oprea_pass,Composite Oprea lead-like pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.00401858947385718
+intramolecular_hbond_potential_present,1 if the intramolecular H-bond proxy count is non-zero.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0034849919553029958
+oprea_ring_count_in_1_4,Rule flag: 1 <= ring count <= 4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.003453256840813831
+moderate_basic_pka_8_12,Heuristic flag: a predicted basic site exists and its most basic pKa is between 8 and 12.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0031102347369219175
+stereocenter_count_ge_1,Heuristic flag: at least one stereocenter is present.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0031019767986971668
+oral_bioavailability_screen_pass,"Combined heuristic screen requiring Lipinski, Veber, Egan, Pfizer-safe, aromatic ring <= 3, and either stereochemistry or fractionCSP3 >= 0.4.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0029958608110301397
+hbd_le_5,Rule flag: HBD <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.002979374649663648
+mw_le_300,Rule flag: MW <= 300.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.002732035405838432
+logp_le_3,Rule flag: logP <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0026118010063746373
+any_moderate_pka_2_12,Heuristic flag: at least one predicted acidic/basic site falls in the broad 2-12 oral-ionization window.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.002610744887834342
+oprea_hbd_lt_2,Rule flag: HBD < 2.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0025224648979596987
+tpsa_le_150,Rule flag: TPSA <= 150.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0024209944124464777
+hba_le_3,Rule flag: HBA <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.002396903892350336
+ghose_logp_in_neg0p4_5p6,Rule flag: -0.4 < logP < 5.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.002377999866745223
+positive_formal_atom_count,Number of atoms with positive formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.002122590020926402
+pfizer_3_75_risk,Rule flag: logP > 3 and TPSA < 75.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.00211556787827802
+fused_aromatic_ring_count,Count of aromatic rings participating in fused aromatic systems.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0021133698628524864
+ionizable_center_present,1 if at least one acidic or basic site is predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.002012647898935054
+ghose_mr_in_40_130,Rule flag: 40 < molar refractivity < 130.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0019974366235024914
+muegge_logp_in_neg2_5,Rule flag: -2 <= logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.001968841863682067
+pfizer_3_75_safe,Rule flag: not(logP > 3 and TPSA < 75).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.001925319932322333
+muegge_mw_in_200_600,Rule flag: 200 <= MW <= 600.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0018862641010538885
+oprea_hba_in_2_10,Rule flag: 2 <= HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.001669239799901418
+veber_pass,Composite Veber pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0016466654946758275
+rule_of_3_pass,Composite fragment Rule-of-3 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0013783030641924237
+ghose_atom_count_in_20_70,Rule flag: 20 < atom count < 70.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.001277660997109173
+negative_formal_atom_count,Number of atoms with negative formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0010701088825333608
+hba_le_10,Rule flag: HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0010687594945208536
+tpsa_le_131p6,Rule flag: TPSA <= 131.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0010098742335071886
+egan_pass,Composite Egan pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0009785100358138976
+tpsa_le_140,Rule flag: TPSA <= 140.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0009221108003499835
+logp_le_5,Rule flag: logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0004970581517014594
+crystal_packing_risk_proxy,"Empirical proxy for excessive planar aromatic surface using aromaticity, fused aromaticity, and low saturation.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.00045785146174642696
+rotatable_bonds_le_10,Rule flag: rotatable bonds <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.00036649367439018694
+logp_le_5p88,Rule flag: logP <= 5.88.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0002838852182877231
+aromatic_ring_count_le_3,Heuristic flag: aromatic ring count <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.00018853837527687037
+ring_count_le_7,Rule flag: ring count <= 7.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.00010465409015439203
+pka_features_available,1 if MolGpKa-derived pKa/logD features were computed.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0
+rotatable_bonds_le_15,Rule flag: rotatable bonds <= 15.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,2,0.0
+mol_weight,Molecular weight (Descriptors.MolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.042020071821673416
+tpsa,Topological polar surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.04148205649329198
+exact_mol_weight,Exact molecular weight (Descriptors.ExactMolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03897129681212855
+labute_asa,Labute approximate surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.038410721445532446
+estimated_logd_ph74,Estimated logD at pH 7.4 from logP and neutral fraction.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03762492080579406
+logp,Wildman-Crippen logP.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.035817460822869684
+neutral_fraction_ph74,Estimated neutral fraction at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03568909637004925
+fraction_csp3,Fraction of sp3 carbons.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03508541919802192
+charged_fraction_ph74,1 - neutral_fraction_ph74.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.035064431026022365
+total_atom_count,Total atom count after adding explicit hydrogens as a Ghose-style atom-count proxy.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.034953201914855396
+labute_asa_per_heavy_atom,Labute ASA divided by heavy-atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03430378641049495
+net_charge_proxy_ph74,Base protonation minus acid deprotonation proxy at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03324544058807721
+aromatic_heavy_atom_fraction,Aromatic atom fraction among heavy atoms.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03197300605264909
+molar_refractivity,Wildman-Crippen molar refractivity.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.03188111838537938
+stereocenter_count,Count of assigned or potential tetrahedral stereocenters.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.030532721086231212
+base_protonated_fraction_ph74,Estimated protonated fraction for the dominant basic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.029493990185616964
+intramolecular_hbond_pair_count,Count of donor-acceptor atom pairs 4-8 bonds apart as a proxy for intramolecular H-bond potential.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.027651876796704236
+heavy_atom_count,Heavy atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.026646452927246617
+acid_deprotonated_fraction_ph74,Estimated deprotonated fraction for the dominant acidic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.02628829991134102
+total_hbond_donors_acceptors,HBD + HBA total.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.024948689802049888
+hbd,Hydrogen bond donor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.023973535262289625
+fraction_csp3_distance_to_0p45,Absolute distance from the oral-bioavailability saturation target 0.45.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.022548223582379665
+heteroatom_count,Total heteroatom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.018771026446720268
+rotatable_bonds,Rotatable bond count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.017439115408610973
+aliphatic_ring_count,Aliphatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.017285996687719817
+oral_bioavailability_rule_pass_count,"Count of passed composite rules among Lipinski, Veber, Egan, Ghose, Oprea, Rule-of-3, Muegge, and Pfizer 3/75-safe.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.01572335651367001
+abs_formal_charge,Absolute formal charge magnitude.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.015418153721010672
+hba,Hydrogen bond acceptor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0143483467959941
+formal_charge,Formal charge from the input graph.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.013616171493208257
+num_basic_sites,Number of predicted basic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.013460969636638025
+num_acidic_sites,Number of predicted acidic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.01297581373962787
+ring_count,Total ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.009659221277495886
+aromatic_ring_count,Aromatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.00906816251236347
+ghose_mw_in_160_480,Rule flag: 160 < MW < 480.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.008050470306827923
+oprea_rotatable_bonds_in_2_8,Rule flag: 2 < rotatable bonds < 8.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.007703272634255259
+ghose_pass,Composite Ghose filter pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.006709805700026018
+hbd_le_3,Rule flag: HBD <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.004759812987908146
+has_amphoteric_sites,1 if both acidic and basic sites are predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.004623542114273887
+lipinski_violation_count,Number of Lipinski cutoffs violated among MW/logP/HBD/HBA.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.004307070724792087
+fraction_csp3_ge_0p4,Heuristic flag: fractionCSP3 >= 0.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.004256402474127975
+oprea_pass,Composite Oprea lead-like pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0037881141558052224
+muegge_pass,Composite Muegge pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.003678458000376559
+moderate_acidic_pka_2_6,Heuristic flag: a predicted acidic site exists and its most acidic pKa is between 2 and 6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.003531143859736634
+oprea_ring_count_in_1_4,Rule flag: 1 <= ring count <= 4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0035057549953973186
+lipinski_pass,Composite Lipinski Rule-of-5 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.003398118828061408
+stereocenter_count_ge_1,Heuristic flag: at least one stereocenter is present.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0032980711657846222
+intramolecular_hbond_potential_present,1 if the intramolecular H-bond proxy count is non-zero.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.003244745198557278
+mw_le_500,Rule flag: MW <= 500.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0031698189721994265
+oral_bioavailability_screen_pass,"Combined heuristic screen requiring Lipinski, Veber, Egan, Pfizer-safe, aromatic ring <= 3, and either stereochemistry or fractionCSP3 >= 0.4.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.003022561916755197
+logp_le_3,Rule flag: logP <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0029979723832095663
+tpsa_le_150,Rule flag: TPSA <= 150.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0029387705271945045
+moderate_basic_pka_8_12,Heuristic flag: a predicted basic site exists and its most basic pKa is between 8 and 12.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0029250601183341304
+any_moderate_pka_2_12,Heuristic flag: at least one predicted acidic/basic site falls in the broad 2-12 oral-ionization window.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0028275800321161063
+oprea_hbd_lt_2,Rule flag: HBD < 2.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0027639550212625597
+mw_le_300,Rule flag: MW <= 300.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0026411011382177297
+ghose_mr_in_40_130,Rule flag: 40 < molar refractivity < 130.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0023391567017452624
+ghose_logp_in_neg0p4_5p6,Rule flag: -0.4 < logP < 5.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.002332410326378952
+fused_aromatic_ring_count,Count of aromatic rings participating in fused aromatic systems.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0023320572332014605
+pfizer_3_75_safe,Rule flag: not(logP > 3 and TPSA < 75).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.002173887215068981
+muegge_mw_in_200_600,Rule flag: 200 <= MW <= 600.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0021680777279707857
+hba_le_3,Rule flag: HBA <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.002116866842796353
+positive_formal_atom_count,Number of atoms with positive formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.001960944921134551
+hbd_le_5,Rule flag: HBD <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0019055746028087573
+ionizable_center_present,1 if at least one acidic or basic site is predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0016782832939586296
+veber_pass,Composite Veber pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0016761430379281
+muegge_logp_in_neg2_5,Rule flag: -2 <= logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0015946996835340893
+pfizer_3_75_risk,Rule flag: logP > 3 and TPSA < 75.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0015521456338787932
+hba_le_10,Rule flag: HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0015243725372427067
+oprea_hba_in_2_10,Rule flag: 2 <= HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0014582896833855842
+egan_pass,Composite Egan pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.001456406416108259
+rule_of_3_pass,Composite fragment Rule-of-3 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0012250840041860488
+negative_formal_atom_count,Number of atoms with negative formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.001140932790778
+ghose_atom_count_in_20_70,Rule flag: 20 < atom count < 70.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.00109316729956486
+tpsa_le_131p6,Rule flag: TPSA <= 131.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0010634792666669997
+tpsa_le_140,Rule flag: TPSA <= 140.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0007514590086514718
+logp_le_5,Rule flag: logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0005340322816574568
+rotatable_bonds_le_10,Rule flag: rotatable bonds <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0005010071627927007
+crystal_packing_risk_proxy,"Empirical proxy for excessive planar aromatic surface using aromaticity, fused aromaticity, and low saturation.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0004062296247516421
+aromatic_ring_count_le_3,Heuristic flag: aromatic ring count <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0002543803055326419
+ring_count_le_7,Rule flag: ring count <= 7.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.00012445392779643878
+logp_le_5p88,Rule flag: logP <= 5.88.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0001227032815027243
+pka_features_available,1 if MolGpKa-derived pKa/logD features were computed.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0
+rotatable_bonds_le_15,Rule flag: rotatable bonds <= 15.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,3,0.0
+tpsa,Topological polar surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.04124412242161739
+mol_weight,Molecular weight (Descriptors.MolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.039729829961188574
+estimated_logd_ph74,Estimated logD at pH 7.4 from logP and neutral fraction.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.039506537997008845
+exact_mol_weight,Exact molecular weight (Descriptors.ExactMolWt).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03886919767802273
+labute_asa,Labute approximate surface area.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03879423237011828
+logp,Wildman-Crippen logP.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.035338433125048
+net_charge_proxy_ph74,Base protonation minus acid deprotonation proxy at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.034887531566111726
+total_atom_count,Total atom count after adding explicit hydrogens as a Ghose-style atom-count proxy.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03467882839637247
+neutral_fraction_ph74,Estimated neutral fraction at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03455835693374844
+charged_fraction_ph74,1 - neutral_fraction_ph74.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03345774254171454
+molar_refractivity,Wildman-Crippen molar refractivity.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03275917602245614
+labute_asa_per_heavy_atom,Labute ASA divided by heavy-atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.032628079956926216
+base_protonated_fraction_ph74,Estimated protonated fraction for the dominant basic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03217453421460094
+fraction_csp3,Fraction of sp3 carbons.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.032003333129760496
+aromatic_heavy_atom_fraction,Aromatic atom fraction among heavy atoms.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.03095682590565115
+stereocenter_count,Count of assigned or potential tetrahedral stereocenters.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.028452081311582268
+intramolecular_hbond_pair_count,Count of donor-acceptor atom pairs 4-8 bonds apart as a proxy for intramolecular H-bond potential.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.02723511115036725
+heavy_atom_count,Heavy atom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.026888101725603582
+acid_deprotonated_fraction_ph74,Estimated deprotonated fraction for the dominant acidic site at pH 7.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.026855566440370945
+hbd,Hydrogen bond donor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.02508907066575906
+total_hbond_donors_acceptors,HBD + HBA total.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.024753460364432732
+fraction_csp3_distance_to_0p45,Absolute distance from the oral-bioavailability saturation target 0.45.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.02379916729545744
+heteroatom_count,Total heteroatom count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.01871765666605343
+rotatable_bonds,Rotatable bond count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.01703973171631455
+aliphatic_ring_count,Aliphatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.015968475950842855
+abs_formal_charge,Absolute formal charge magnitude.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.015549752901942845
+oral_bioavailability_rule_pass_count,"Count of passed composite rules among Lipinski, Veber, Egan, Ghose, Oprea, Rule-of-3, Muegge, and Pfizer 3/75-safe.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.014915642698218686
+hba,Hydrogen bond acceptor count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.014915365106203862
+formal_charge,Formal charge from the input graph.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.014394950169589502
+num_acidic_sites,Number of predicted acidic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.012962959785101197
+num_basic_sites,Number of predicted basic sites from the MolGpKa helper.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.012565226526249494
+aromatic_ring_count,Aromatic ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.01022780685313316
+ghose_mw_in_160_480,Rule flag: 160 < MW < 480.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.010066976176292536
+ring_count,Total ring count.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.008805663515394557
+oprea_rotatable_bonds_in_2_8,Rule flag: 2 < rotatable bonds < 8.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.007688029444563054
+ghose_pass,Composite Ghose filter pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.006079205183575229
+hbd_le_3,Rule flag: HBD <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.00506900366579457
+lipinski_violation_count,Number of Lipinski cutoffs violated among MW/logP/HBD/HBA.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.004892920426719893
+has_amphoteric_sites,1 if both acidic and basic sites are predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.004885927997085854
+lipinski_pass,Composite Lipinski Rule-of-5 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.004366410906674324
+fraction_csp3_ge_0p4,Heuristic flag: fractionCSP3 >= 0.4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.004245160367148956
+moderate_acidic_pka_2_6,Heuristic flag: a predicted acidic site exists and its most acidic pKa is between 2 and 6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0041403291632540135
+mw_le_500,Rule flag: MW <= 500.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.003951872631590402
+oprea_pass,Composite Oprea lead-like pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0038547608999253795
+muegge_pass,Composite Muegge pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0037032222452097275
+oprea_ring_count_in_1_4,Rule flag: 1 <= ring count <= 4.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.003541129582543011
+intramolecular_hbond_potential_present,1 if the intramolecular H-bond proxy count is non-zero.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.003326037085187074
+stereocenter_count_ge_1,Heuristic flag: at least one stereocenter is present.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.00319604482125958
+tpsa_le_150,Rule flag: TPSA <= 150.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.00311305257172115
+moderate_basic_pka_8_12,Heuristic flag: a predicted basic site exists and its most basic pKa is between 8 and 12.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0029652253733870306
+oral_bioavailability_screen_pass,"Combined heuristic screen requiring Lipinski, Veber, Egan, Pfizer-safe, aromatic ring <= 3, and either stereochemistry or fractionCSP3 >= 0.4.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.002752441191729258
+logp_le_3,Rule flag: logP <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0027415930617458676
+any_moderate_pka_2_12,Heuristic flag: at least one predicted acidic/basic site falls in the broad 2-12 oral-ionization window.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0027400969277069434
+hbd_le_5,Rule flag: HBD <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.002655219386332822
+muegge_mw_in_200_600,Rule flag: 200 <= MW <= 600.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.002573656084496884
+mw_le_300,Rule flag: MW <= 300.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0025019192210557996
+hba_le_3,Rule flag: HBA <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.00245263031939966
+oprea_hbd_lt_2,Rule flag: HBD < 2.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0023259009634400284
+ghose_logp_in_neg0p4_5p6,Rule flag: -0.4 < logP < 5.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0022736911474474622
+positive_formal_atom_count,Number of atoms with positive formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0022690469735386905
+pfizer_3_75_safe,Rule flag: not(logP > 3 and TPSA < 75).,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.002134010774316786
+fused_aromatic_ring_count,Count of aromatic rings participating in fused aromatic systems.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.002128010660684741
+ghose_mr_in_40_130,Rule flag: 40 < molar refractivity < 130.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.00211314524850792
+pfizer_3_75_risk,Rule flag: logP > 3 and TPSA < 75.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0020733122373251564
+ionizable_center_present,1 if at least one acidic or basic site is predicted.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.002064318736823501
+veber_pass,Composite Veber pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.001791135584054747
+hba_le_10,Rule flag: HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0015044001685607302
+ghose_atom_count_in_20_70,Rule flag: 20 < atom count < 70.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0014963907073798658
+oprea_hba_in_2_10,Rule flag: 2 <= HBA <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0014532937340881573
+egan_pass,Composite Egan pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0011972426660395484
+rule_of_3_pass,Composite fragment Rule-of-3 pass flag.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0010879845808921726
+tpsa_le_131p6,Rule flag: TPSA <= 131.6.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.001070596645498242
+muegge_logp_in_neg2_5,Rule flag: -2 <= logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0010687967465529485
+tpsa_le_140,Rule flag: TPSA <= 140.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0010651563407064807
+negative_formal_atom_count,Number of atoms with negative formal charge.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0009644080411750953
+rotatable_bonds_le_10,Rule flag: rotatable bonds <= 10.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0005413677097076729
+logp_le_5,Rule flag: logP <= 5.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0004371710953901525
+crystal_packing_risk_proxy,"Empirical proxy for excessive planar aromatic surface using aromaticity, fused aromaticity, and low saturation.",bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.00035730463466045675
+logp_le_5p88,Rule flag: logP <= 5.88.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.00014541334436106234
+aromatic_ring_count_le_3,Heuristic flag: aromatic ring count <= 3.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0001315698953273176
+ring_count_le_7,Rule flag: ring count <= 7.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,8.091356615874515e-05
+pka_features_available,1 if MolGpKa-derived pKa/logD features were computed.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0
+rotatable_bonds_le_15,Rule flag: rotatable bonds <= 15.,bioavailability_ma,TDC,Bioavailability_Ma,synthesize,4,0.0

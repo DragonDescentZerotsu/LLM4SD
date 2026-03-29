@@ -63,7 +63,7 @@ _FEATURE_TEMPLATE = None
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--subtask', type=str, default='BBB_Martins', help='TDC task name')
-    parser.add_argument('--feature_backend', type=str, default='bbb_martins', help='registered feature backend name, for example bbb_martins, dili, clintox, pampa_ncats, skin_reaction, pgp_broccatelli, carcinogens_lagunin, or ames')
+    parser.add_argument('--feature_backend', type=str, default='bbb_martins', help='registered feature backend name, for example bbb_martins, dili, clintox, herg, pampa_ncats, skin_reaction, pgp_broccatelli, carcinogens_lagunin, ames, bioavailability_ma, hia_hou, cyp2c9_substrate_carbonmangels, cyp2d6_substrate_carbonmangels, cyp3a4_substrate_carbonmangels, sarscov2_3clpro_diamond, or sarscov2_vitro_touret')
     parser.add_argument('--precomputed_feature_dir', type=str, default='scaffold_datasets/TDC_precomputed_features', help='directory for cached precomputed TDC features')
     parser.add_argument('--feature_jobs', type=int, default=4, help='number of worker processes used for feature precomputation')
     parser.add_argument('--rf_jobs', type=int, default=1, help='number of CPU workers used by RandomForest itself during tuning')

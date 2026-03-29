@@ -69,7 +69,7 @@ parser.add_argument(
     '--feature_backend',
     type=str,
     default='generated_rules',
-    help='feature backend name (generated_rules/bbb_martins/dili/clintox/pampa_ncats/skin_reaction/pgp_broccatelli/carcinogens_lagunin/ames)',
+    help='feature backend name (generated_rules/bbb_martins/dili/clintox/herg/pampa_ncats/skin_reaction/pgp_broccatelli/carcinogens_lagunin/ames/bioavailability_ma/hia_hou/cyp2c9_substrate_carbonmangels/cyp2d6_substrate_carbonmangels/cyp3a4_substrate_carbonmangels/sarscov2_3clpro_diamond/sarscov2_vitro_touret)',
 )
 parser.add_argument('--num_samples', type=int, default=50, help='number of sample lists (30/50) for inference')
 parser.add_argument('--output_dir', type=str, default='eval_result', help='output folder')
