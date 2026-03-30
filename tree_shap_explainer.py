@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import OrderedDict
 from pathlib import Path
 
 import numpy as np
@@ -182,11 +183,22 @@ def _prepare_single_smiles_inputs(
     smiles: str,
     bundle: dict[str, object],
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    raw_surviving_df, transformed_df = _prepare_smiles_list_inputs([smiles], bundle)
+    return raw_surviving_df, transformed_df
+
+
+def _prepare_smiles_list_inputs(
+    smiles_list: list[str],
+    bundle: dict[str, object],
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     backend = _build_backend_from_bundle(bundle)
-    raw_feature_row = backend.featurize_smiles(smiles)
+    if hasattr(backend, "featurize_smiles_list"):
+        raw_feature_df = backend.featurize_smiles_list(smiles_list, on_error="raise")
+    else:
+        raw_feature_df = pd.DataFrame([backend.featurize_smiles(smiles) for smiles in smiles_list])
 
     input_feature_names = list(bundle["input_feature_names"])
-    raw_feature_df = pd.DataFrame([raw_feature_row]).reindex(columns=input_feature_names)
+    raw_feature_df = raw_feature_df.reindex(columns=input_feature_names)
     raw_surviving_df, transformed_df = transform_feature_frame(
         raw_feature_df,
         bundle["preprocessor"],
@@ -195,36 +207,157 @@ def _prepare_single_smiles_inputs(
 
 
 def _select_output_vector(values: np.ndarray, class_index: int) -> np.ndarray:
+    return _select_output_matrix(values, [class_index])[0]
+
+
+def _select_output_matrix(values: np.ndarray, class_indices: list[int]) -> np.ndarray:
+    num_rows = len(class_indices)
     if values.ndim == 1:
-        return values
+        if num_rows != 1:
+            raise ValueError(f"Expected one class index for 1D SHAP values, got {num_rows}.")
+        return values.reshape(1, -1)
     if values.ndim == 2:
-        return values[0]
+        if values.shape[0] != num_rows:
+            if num_rows == 1:
+                return values[[0], :]
+            raise ValueError(
+                f"2D SHAP values row count {values.shape[0]} does not match class index count {num_rows}."
+            )
+        return values
     if values.ndim == 3:
-        if values.shape[0] == 1:
-            return values[0, :, class_index]
-        if values.shape[1] == 1:
-            return values[class_index, 0, :]
+        if values.shape[0] == num_rows:
+            return np.stack(
+                [values[row_index, :, class_indices[row_index]] for row_index in range(num_rows)],
+                axis=0,
+            )
+        if values.shape[1] == num_rows:
+            return np.stack(
+                [values[class_indices[row_index], row_index, :] for row_index in range(num_rows)],
+                axis=0,
+            )
     raise ValueError(f"Unsupported SHAP value shape: {values.shape}")
 
 
 def _select_base_value(base_values: np.ndarray, class_index: int) -> float:
+    return float(_select_base_values(base_values, [class_index])[0])
+
+
+def _select_base_values(base_values: np.ndarray, class_indices: list[int]) -> np.ndarray:
+    num_rows = len(class_indices)
     if base_values.ndim == 0:
-        return float(base_values)
+        return np.full(num_rows, float(base_values))
     if base_values.ndim == 1:
         if len(base_values) == 1:
-            return float(base_values[0])
-        return float(base_values[class_index])
+            return np.full(num_rows, float(base_values[0]))
+        if num_rows == 1:
+            return np.asarray([float(base_values[class_indices[0]])])
+        if len(base_values) == num_rows:
+            return np.asarray(base_values, dtype=float)
+        raise ValueError(
+            f"Unsupported 1D SHAP base value length {len(base_values)} for {num_rows} rows."
+        )
     if base_values.ndim == 2:
-        if base_values.shape[0] == 1:
-            return float(base_values[0, class_index])
-        if base_values.shape[1] == 1:
-            return float(base_values[class_index, 0])
+        if base_values.shape[0] == num_rows:
+            return np.asarray(
+                [float(base_values[row_index, class_indices[row_index]]) for row_index in range(num_rows)],
+                dtype=float,
+            )
+        if base_values.shape[1] == num_rows:
+            return np.asarray(
+                [float(base_values[class_indices[row_index], row_index]) for row_index in range(num_rows)],
+                dtype=float,
+            )
     raise ValueError(f"Unsupported SHAP base value shape: {base_values.shape}")
 
 
-def explain_smiles_with_tree_shap(
+def _coerce_python_scalar(value):
+    if isinstance(value, np.generic):
+        return value.item()
+    return value
+
+
+def _coerce_json_scalar(value):
+    value = _coerce_python_scalar(value)
+    if isinstance(value, (int, float, str, bool)) or value is None:
+        return value
+    return str(value)
+
+
+def _extract_model_outputs(
+    model,
+    transformed_array: np.ndarray,
+) -> tuple[np.ndarray | None, list[object] | None, list[list[float]] | None, list[object] | None]:
+    predicted_raw = None
+    predicted_classes = None
+    predicted_probabilities = None
+    model_classes = None
+
+    if hasattr(model, "predict"):
+        predicted_raw = np.asarray(model.predict(transformed_array))
+        predicted_classes = [_coerce_python_scalar(value) for value in predicted_raw.tolist()]
+    if hasattr(model, "predict_proba"):
+        probability_rows = np.asarray(model.predict_proba(transformed_array))
+        predicted_probabilities = [
+            [float(probability) for probability in probability_row]
+            for probability_row in probability_rows.tolist()
+        ]
+    if hasattr(model, "classes_"):
+        model_classes = [_coerce_python_scalar(value) for value in model.classes_.tolist()]
+
+    return predicted_raw, predicted_classes, predicted_probabilities, model_classes
+
+
+def _resolve_class_indices(
     *,
-    smiles: str,
+    class_index: int | None,
+    predicted_classes: list[object] | None,
+    model_classes: list[object] | None,
+    num_rows: int,
+) -> list[int]:
+    if class_index is not None:
+        return [class_index] * num_rows
+
+    if predicted_classes is not None and model_classes is not None:
+        class_indices = []
+        for predicted_class in predicted_classes:
+            if predicted_class in model_classes:
+                class_indices.append(model_classes.index(predicted_class))
+            else:
+                class_indices.append(1)
+        return class_indices
+
+    return [1] * num_rows
+
+
+def _build_feature_rows(
+    *,
+    raw_row: pd.Series,
+    transformed_row: pd.Series,
+    shap_values: np.ndarray,
+    feature_descriptions: dict[str, str],
+    top_k: int | None,
+) -> list[dict[str, object]]:
+    features = []
+    for feature_name, shap_value in zip(transformed_row.index.tolist(), shap_values.tolist()):
+        features.append(
+            {
+                "feature_name": feature_name,
+                "feature_description": feature_descriptions.get(feature_name, feature_name),
+                "raw_value": None if pd.isna(raw_row[feature_name]) else float(raw_row[feature_name]),
+                "model_input_value": float(transformed_row[feature_name]),
+                "shap_value": float(shap_value),
+                "abs_shap_value": abs(float(shap_value)),
+            }
+        )
+    features.sort(key=lambda row: row["abs_shap_value"], reverse=True)
+    if top_k is not None:
+        features = features[:top_k]
+    return features
+
+
+def explain_smiles_list_with_tree_shap(
+    *,
+    smiles_list: list[str],
     bundle_path: str | Path | None = None,
     checkpoint_root: str = "checkpoints",
     estimator: str = "rf",
@@ -236,7 +369,10 @@ def explain_smiles_with_tree_shap(
     num_samples: int | None = None,
     class_index: int | None = None,
     top_k: int | None = None,
-) -> dict[str, object]:
+) -> list[dict[str, object]]:
+    if not smiles_list:
+        return []
+
     bundle_path = _resolve_bundle_path(
         bundle_path=bundle_path,
         checkpoint_root=checkpoint_root,
@@ -254,79 +390,96 @@ def explain_smiles_with_tree_shap(
 
     shap = _load_shap_module()
     model = bundle["model"]
-    raw_surviving_df, transformed_df = _prepare_single_smiles_inputs(smiles, bundle)
+    raw_surviving_df, transformed_df = _prepare_smiles_list_inputs(smiles_list, bundle)
     transformed_array = transformed_df.to_numpy()
 
-    predicted_class = None
-    predicted_probabilities = None
-    model_classes = None
-    if hasattr(model, "predict_proba"):
-        predicted_probabilities = [float(probability) for probability in model.predict_proba(transformed_array)[0]]
-    if hasattr(model, "predict"):
-        predicted_raw = model.predict(transformed_array)[0]
-        predicted_class = int(predicted_raw) if isinstance(predicted_raw, (int, np.integer)) else predicted_raw
-    if hasattr(model, "classes_"):
-        model_classes = [
-            int(class_value) if isinstance(class_value, (int, np.integer)) else class_value
-            for class_value in model.classes_.tolist()
-        ]
-
-    resolved_class_index = class_index
-    if resolved_class_index is None:
-        if predicted_class is not None and model_classes is not None and predicted_class in model_classes:
-            resolved_class_index = model_classes.index(predicted_class)
-        else:
-            resolved_class_index = 1
+    predicted_raw, predicted_classes, predicted_probabilities, model_classes = _extract_model_outputs(
+        model,
+        transformed_array,
+    )
+    resolved_class_indices = _resolve_class_indices(
+        class_index=class_index,
+        predicted_classes=predicted_classes,
+        model_classes=model_classes,
+        num_rows=len(smiles_list),
+    )
 
     explainer = shap.TreeExplainer(model)
     explanation = explainer(transformed_df)
 
-    shap_values = _select_output_vector(np.asarray(explanation.values), class_index=resolved_class_index)
-    base_value = _select_base_value(np.asarray(explanation.base_values), class_index=resolved_class_index)
-
+    shap_matrix = _select_output_matrix(np.asarray(explanation.values), resolved_class_indices)
+    base_values = _select_base_values(np.asarray(explanation.base_values), resolved_class_indices)
     feature_descriptions = dict(bundle["feature_descriptions"])
-    raw_row = raw_surviving_df.iloc[0]
-    transformed_row = transformed_df.iloc[0]
-    features = []
-    for feature_name, shap_value in zip(transformed_df.columns.tolist(), shap_values.tolist()):
-        features.append(
-            {
-                "feature_name": feature_name,
-                "feature_description": feature_descriptions.get(feature_name, feature_name),
-                "raw_value": None if pd.isna(raw_row[feature_name]) else float(raw_row[feature_name]),
-                "model_input_value": float(transformed_row[feature_name]),
-                "shap_value": float(shap_value),
-                "abs_shap_value": abs(float(shap_value)),
-            }
+
+    results = []
+    for row_index, smiles in enumerate(smiles_list):
+        raw_row = raw_surviving_df.iloc[row_index]
+        transformed_row = transformed_df.iloc[row_index]
+        features = _build_feature_rows(
+            raw_row=raw_row,
+            transformed_row=transformed_row,
+            shap_values=shap_matrix[row_index],
+            feature_descriptions=feature_descriptions,
+            top_k=top_k,
         )
-    features.sort(key=lambda row: row["abs_shap_value"], reverse=True)
-    if top_k is not None:
-        features = features[:top_k]
 
-    result = {
-        "smiles": smiles,
-        "bundle_path": str(bundle_path),
-        "task_name": bundle["task_name"],
-        "dataset": bundle["dataset"],
-        "subtask": bundle["subtask"],
-        "feature_backend_name": bundle["feature_backend_name"],
-        "model_class": bundle["model_class"],
-        "class_index": resolved_class_index,
-        "base_value": base_value,
-        "features": features,
-    }
+        result = {
+            "smiles": smiles,
+            "bundle_path": str(bundle_path),
+            "task_name": bundle["task_name"],
+            "dataset": bundle["dataset"],
+            "subtask": bundle["subtask"],
+            "feature_backend_name": bundle["feature_backend_name"],
+            "model_class": bundle["model_class"],
+            "class_index": resolved_class_indices[row_index],
+            "base_value": float(base_values[row_index]),
+            "features": features,
+        }
 
-    if predicted_class is not None:
-        result["predicted_class"] = predicted_class
-    if predicted_probabilities is not None:
-        result["predicted_probabilities"] = predicted_probabilities
-    if model_classes is not None:
-        result["model_classes"] = model_classes
-        result["explained_class"] = model_classes[resolved_class_index]
-    else:
-        result["predicted_value"] = float(model.predict(transformed_array)[0])
+        if predicted_classes is not None:
+            result["predicted_class"] = _coerce_json_scalar(predicted_classes[row_index])
+        if predicted_probabilities is not None:
+            result["predicted_probabilities"] = predicted_probabilities[row_index]
+        if model_classes is not None:
+            result["model_classes"] = [_coerce_json_scalar(value) for value in model_classes]
+            result["explained_class"] = _coerce_json_scalar(model_classes[resolved_class_indices[row_index]])
+        elif predicted_raw is not None:
+            result["predicted_value"] = float(predicted_raw[row_index])
 
-    return result
+        results.append(result)
+
+    return results
+
+
+def explain_smiles_with_tree_shap(
+    *,
+    smiles: str,
+    bundle_path: str | Path | None = None,
+    checkpoint_root: str = "checkpoints",
+    estimator: str = "rf",
+    dataset: str | None = None,
+    subtask: str = "",
+    model_name: str | None = None,
+    feature_backend: str | None = None,
+    knowledge_type: str | None = None,
+    num_samples: int | None = None,
+    class_index: int | None = None,
+    top_k: int | None = None,
+) -> dict[str, object]:
+    return explain_smiles_list_with_tree_shap(
+        smiles_list=[smiles],
+        bundle_path=bundle_path,
+        checkpoint_root=checkpoint_root,
+        estimator=estimator,
+        dataset=dataset,
+        subtask=subtask,
+        model_name=model_name,
+        feature_backend=feature_backend,
+        knowledge_type=knowledge_type,
+        num_samples=num_samples,
+        class_index=class_index,
+        top_k=top_k,
+    )[0]
 
 
 def explain_dataset_sample_with_tree_shap(
@@ -367,6 +520,83 @@ def explain_dataset_sample_with_tree_shap(
     )
     result["sample"] = sample
     return result
+
+
+def build_tree_shap_summary_dict(explanation: dict[str, object]) -> OrderedDict[str, object]:
+    summary = OrderedDict()
+    for key in [
+        "bundle_path",
+        "task_name",
+        "dataset",
+        "subtask",
+        "feature_backend_name",
+        "model_class",
+        "class_index",
+        "explained_class",
+        "base_value",
+        "model_classes",
+        "predicted_probabilities",
+    ]:
+        if key in explanation:
+            summary[key] = explanation[key]
+
+    for feature_index, feature in enumerate(explanation.get("features", []), start=1):
+        summary[f"feature_{feature_index}"] = (
+            f"{feature['feature_name']} | {feature['feature_description']} | "
+            f"raw_value={feature['raw_value']} | model_input_value={feature['model_input_value']} | "
+            f"shap_value={feature['shap_value']} | abs_shap_value={feature['abs_shap_value']}"
+        )
+
+    return summary
+
+
+def format_tree_shap_summary_string(summary: OrderedDict[str, object] | dict[str, object]) -> str:
+    return "\n".join(f"{key}:{value}" for key, value in summary.items())
+
+
+def render_tree_shap_concise_text(explanation: dict[str, object]) -> str:
+    lines = []
+    if "sample" in explanation:
+        sample = explanation["sample"]
+        lines.append(f"SMILES: {sample['smiles']}")
+    else:
+        lines.append(f"SMILES: {explanation['smiles']}")
+
+    explained_class = explanation.get("explained_class")
+    if explanation.get("model_classes") == [0, 1] and explained_class in [0, 1]:
+        explained_label = "B" if explained_class == 1 else "A"
+    else:
+        explained_label = explained_class
+
+    if "predicted_probabilities" in explanation:
+        model_classes = explanation.get("model_classes")
+        if model_classes == [0, 1] and len(explanation["predicted_probabilities"]) == 2:
+            prob_a = _format_number(explanation["predicted_probabilities"][0])
+            prob_b = _format_number(explanation["predicted_probabilities"][1])
+            lines.append(f"Predicted probabilities: A={prob_a}, B={prob_b}")
+        else:
+            formatted_probabilities = [
+                _format_number(probability) for probability in explanation["predicted_probabilities"]
+            ]
+            lines.append(f"Predicted probabilities: {formatted_probabilities}")
+        if explanation.get("model_classes") == [0, 1]:
+            predicted_label = "B" if explanation["predicted_class"] == 1 else "A"
+            lines.append(f"Predicted class: {predicted_label} ({explanation['predicted_class']})")
+        else:
+            lines.append(f"Predicted class: {explanation['predicted_class']}")
+    else:
+        lines.append(f"Predicted value: {_format_number(explanation['predicted_value'])}")
+
+    lines.append(f"Base probability of choosing {explained_label}: {_format_number(explanation['base_value'])}")
+    lines.append("Top features:")
+    for row in explanation["features"]:
+        concise_description = row["feature_description"].rstrip(".")
+        lines.append(
+            f"- {concise_description}={_format_number(row['raw_value'])}, "
+            f"adds probability = {_format_number(row['shap_value'])} "
+            f"to choosing ({explained_label})."
+        )
+    return "\n".join(lines)
 
 
 def _main():
@@ -425,14 +655,18 @@ def _main():
             top_k=cli_args.top_k,
         )
 
-    print(f"Task: {explanation['task_name']}")
-    print(f"Bundle: {explanation['bundle_path']}")
+    if cli_args.mode == "detailed":
+        print(f"Task: {explanation['task_name']}")
+        print(f"Bundle: {explanation['bundle_path']}")
+        if "sample" in explanation:
+            sample = explanation["sample"]
+            print(
+                f"Dataset sample: {sample['dataset']}/{sample['subtask'] or sample['dataset']} "
+                f"{sample['split']}[{sample['sample_index']}]"
+            )
+
     if "sample" in explanation:
         sample = explanation["sample"]
-        print(
-            f"Dataset sample: {sample['dataset']}/{sample['subtask'] or sample['dataset']} "
-            f"{sample['split']}[{sample['sample_index']}]"
-        )
         print(f"SMILES: {sample['smiles']}")
     else:
         print(f"SMILES: {explanation['smiles']}")
@@ -443,52 +677,27 @@ def _main():
     else:
         explained_label = explained_class
 
+    if cli_args.mode == "concise":
+        print("\n".join(render_tree_shap_concise_text(explanation).splitlines()[1:]))
+        return
+
     if "predicted_probabilities" in explanation:
-        if cli_args.mode == "concise":
-            model_classes = explanation.get("model_classes")
-            if model_classes == [0, 1] and len(explanation["predicted_probabilities"]) == 2:
-                prob_a = _format_number(explanation["predicted_probabilities"][0])
-                prob_b = _format_number(explanation["predicted_probabilities"][1])
-                print(f"Predicted probabilities: A={prob_a}, B={prob_b}")
-            else:
-                formatted_probabilities = [_format_number(probability) for probability in explanation["predicted_probabilities"]]
-                print(f"Predicted probabilities: {formatted_probabilities}")
-        else:
-            print(f"Predicted probabilities: {explanation['predicted_probabilities']}")
-            if "model_classes" in explanation:
-                print(f"Model classes: {explanation['model_classes']}")
-        if cli_args.mode == "concise" and explanation.get("model_classes") == [0, 1]:
-            predicted_label = "B" if explanation["predicted_class"] == 1 else "A"
-            print(f"Predicted class: {predicted_label} ({explanation['predicted_class']})")
-        else:
-            print(f"Predicted class: {explanation['predicted_class']}")
-        if cli_args.mode == "detailed" and explained_class is not None:
+        print(f"Predicted probabilities: {explanation['predicted_probabilities']}")
+        if "model_classes" in explanation:
+            print(f"Model classes: {explanation['model_classes']}")
+        print(f"Predicted class: {explanation['predicted_class']}")
+        if explained_class is not None:
             print(f"Explaining class: {explained_class}")
     else:
-        if cli_args.mode == "concise":
-            print(f"Predicted value: {_format_number(explanation['predicted_value'])}")
-        else:
-            print(f"Predicted value: {explanation['predicted_value']}")
-    if cli_args.mode == "concise":
-        print(f"Base probability of choosing {explained_label}: {_format_number(explanation['base_value'])}")
-    else:
         print(f"Base value: {explanation['base_value']}")
+        print(f"Predicted value: {explanation['predicted_value']}")
     print("Top features:")
-    if cli_args.mode == "concise":
-        for row in explanation["features"]:
-            concise_description = row["feature_description"].rstrip(".")
-            print(
-                f"- {concise_description}={_format_number(row['raw_value'])}, "
-                f"adds probability = {_format_number(row['shap_value'])} "
-                f"to choosing ({explained_label})."
-            )
-    else:
-        for row in explanation["features"]:
-            print(
-                f"- {row['feature_name']}: shap={row['shap_value']:.6f}, "
-                f"raw={row['raw_value']}, model_input={row['model_input_value']:.6f}, "
-                f"description={row['feature_description']}"
-            )
+    for row in explanation["features"]:
+        print(
+            f"- {row['feature_name']}: shap={row['shap_value']:.6f}, "
+            f"raw={row['raw_value']}, model_input={row['model_input_value']:.6f}, "
+            f"description={row['feature_description']}"
+        )
 
 
 if __name__ == "__main__":

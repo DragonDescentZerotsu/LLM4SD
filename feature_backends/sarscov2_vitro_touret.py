@@ -19,3 +19,4 @@ class SARSCoV2VitroTouretBackend:
 
     def featurize_smiles_list(self, smiles_list: list[str], on_error: str = "raise"):
         return sarscov2_vitro_touret_rule_features.featurize_smiles_list(smiles_list, on_error=on_error)
+ 

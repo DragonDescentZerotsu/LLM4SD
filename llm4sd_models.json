@@ -10,6 +10,16 @@
         "warm_start": true,
         "max_features": "log2"
     },
+    "CYP2C9_Substrate_CarbonMangels": {
+        "n_estimators": 200,
+        "max_depth": 40,
+        "min_samples_split": 10,
+        "min_samples_leaf": 2,
+        "bootstrap": true,
+        "criterion": "gini",
+        "max_features": "log2",
+        "class_weight": "balanced"
+    },
     "CYP3A4_Substrate_CarbonMangels": {
         "n_estimators": 200,
         "max_depth": 10,
