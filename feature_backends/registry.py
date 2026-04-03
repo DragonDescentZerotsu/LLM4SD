@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import importlib
+
+from feature_feedback import is_feedback_backend_name
+
+
 def load_feature_backend(name: str, *, function_names: list[str] | None = None, namespace: dict | None = None):
     if name == "generated_rules":
         from .generated_rules import GeneratedRulesBackend
@@ -7,6 +12,11 @@ def load_feature_backend(name: str, *, function_names: list[str] | None = None, 
         if function_names is None or namespace is None:
             raise ValueError("generated_rules backend requires function_names and namespace")
         return GeneratedRulesBackend(function_names=function_names, namespace=namespace)
+    if is_feedback_backend_name(name):
+        from .module_backed import ModuleBackedFeatureBackend
+
+        module = importlib.import_module(f"codex_generated_code_variants.{name}")
+        return ModuleBackedFeatureBackend(name=name, module=module)
     if name == "bbb_martins":
         from .bbb_martins import BBBMartinsBackend
 

@@ -118,3 +118,19 @@ Some TDC subtasks only have `train` and `valid`. `eval.py` may fall back to the 
 - `/data1/tianang/Projects/LLM4SD/feature_backends/`
 - `/data1/tianang/Projects/LLM4SD/codex_generated_code/`
 - `/data1/tianang/Projects/LLM4SD/rule_importance.py`
+
+## Feedback Loop Notes
+
+The repository now also has a train-only feature feedback loop for TDC classification:
+
+- `feature_feedback_loop.py`
+- `feature_feedback/`
+- `codex_generated_code_variants/`
+- `feature_feedback/TDC_FEEDBACK_LOOP_RUNBOOK.md`
+
+Important rules:
+
+- Analyze only `train` errors when proposing feature edits
+- Use `valid` only as the acceptance gate
+- Never edit `codex_generated_code/` in place when testing feedback-driven feature changes
+- Store all accepted or rejected feature edits as versioned copies under `codex_generated_code_variants/`

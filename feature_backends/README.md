@@ -860,7 +860,8 @@ get_feature_descriptions()
 - `hia_hou` backend 会计算肠道 pH 下的中性分数和 logD 代理，首次运行时也可能因为 MolGpKa 初始化而变慢
 - `sarscov2_vitro_touret` backend 同时包含 RDKit 结构警报与 MolGpKa 派生特征，首次运行时也可能因为 MolGpKa 初始化而变慢
 - `generated_rules` backend 依赖外部 `exec` 过的函数命名空间
-- 目前 registry 还是手工注册，不是自动发现式加载
+- 除了静态注册 backend 之外，registry 现在还支持按命名约定动态加载 feedback 变体 backend，例如 `dili_feedback_v001`
+- feedback 变体 backend 的代码位于 `codex_generated_code_variants/`，并通过统一的 module-backed adapter 接入现有训练流程
 
 ## 给后续维护者的建议
 
@@ -873,3 +874,31 @@ get_feature_descriptions()
 - 命令行参数变化
 
 这样可以保证这层抽象一直“代码和说明一致”。
+
+## Feedback 变体 Backend
+
+如果你在做 train-error-driven feature feedback loop，不要直接修改 `codex_generated_code/` 里的原始特征代码。
+
+应该使用：
+
+```bash
+python feature_feedback_loop.py init-variant --base_backend dili --variant_backend dili_feedback_v001 --subtask DILI
+```
+
+这样会在 `codex_generated_code_variants/` 下创建一个版本化副本 backend。
+
+之后你可以像普通 backend 一样直接调参和评估：
+
+```bash
+python tune_tdc_rf.py --subtask DILI --feature_backend dili_feedback_v001
+python eval.py --dataset TDC --subtask DILI --feature_backend dili_feedback_v001
+```
+
+这些 feedback 变体 backend 会自动拥有独立的：
+
+- TDC 预计算特征缓存
+- tuned RF 参数 JSON
+- checkpoint bundle
+- eval 输出文件
+
+也就是说，它们与原始 backend 兼容，但不会污染原始 backend 的结果产物。

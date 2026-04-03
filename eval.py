@@ -69,7 +69,7 @@ parser.add_argument(
     '--feature_backend',
     type=str,
     default='generated_rules',
-    help='feature backend name (generated_rules/bbb_martins/dili/clintox/herg/pampa_ncats/skin_reaction/pgp_broccatelli/carcinogens_lagunin/ames/bioavailability_ma/hia_hou/cyp2c9_substrate_carbonmangels/cyp2d6_substrate_carbonmangels/cyp3a4_substrate_carbonmangels/sarscov2_3clpro_diamond/sarscov2_vitro_touret)',
+    help='feature backend name, including generated_rules, registered static backends, or feedback variants such as dili_feedback_v001',
 )
 parser.add_argument('--num_samples', type=int, default=50, help='number of sample lists (30/50) for inference')
 parser.add_argument('--output_dir', type=str, default='eval_result', help='output folder')
@@ -465,6 +465,112 @@ def build_selection_metrics(
     return metrics
 
 
+def build_classification_metric_row(
+    *,
+    seed: int,
+    bundle_path,
+    train_macro_f1: float,
+    train_roc_auc: float,
+    valid_macro_f1: float,
+    valid_roc_auc: float,
+    test_macro_f1: float,
+    test_roc_auc: float,
+    test_resolved_split: str,
+):
+    return {
+        "dataset": args.dataset,
+        "subtask": args.subtask,
+        "model_name": args.model,
+        "knowledge_type": args.knowledge_type,
+        "feature_backend": args.feature_backend,
+        "num_samples": args.num_samples,
+        "seed": seed,
+        "bundle_path": str(bundle_path),
+        "train_macro_f1": float(train_macro_f1),
+        "train_roc_auc": float(train_roc_auc),
+        "valid_macro_f1": float(valid_macro_f1),
+        "valid_roc_auc": float(valid_roc_auc),
+        "test_macro_f1": float(test_macro_f1),
+        "test_roc_auc": float(test_roc_auc),
+        "test_resolved_split": test_resolved_split,
+    }
+
+
+def build_classification_prediction_rows(
+    *,
+    seed: int,
+    bundle_path,
+    split_label: str,
+    resolved_split: str,
+    smiles_list: list[str],
+    y_true: list[float],
+    y_pred,
+    y_proba,
+    model_classes,
+):
+    probability_index_by_class = {}
+    for index, class_label in enumerate(model_classes):
+        probability_index_by_class[int(class_label)] = index
+
+    prob_0_index = probability_index_by_class.get(0)
+    prob_1_index = probability_index_by_class.get(1)
+
+    rows = []
+    for sample_index, (smiles, true_label, predicted_label, probability_row) in enumerate(
+        zip(smiles_list, y_true, y_pred, y_proba)
+    ):
+        prob_0 = float(probability_row[prob_0_index]) if prob_0_index is not None else math.nan
+        prob_1 = float(probability_row[prob_1_index]) if prob_1_index is not None else math.nan
+        rows.append(
+            {
+                "dataset": args.dataset,
+                "subtask": args.subtask,
+                "model_name": args.model,
+                "knowledge_type": args.knowledge_type,
+                "feature_backend": args.feature_backend,
+                "num_samples": args.num_samples,
+                "seed": seed,
+                "bundle_path": str(bundle_path),
+                "split": split_label,
+                "resolved_split": resolved_split,
+                "sample_index": sample_index,
+                "smiles": str(smiles),
+                "y_true": int(true_label),
+                "y_pred": int(predicted_label),
+                "prob_0": prob_0,
+                "prob_1": prob_1,
+                "correct": bool(int(predicted_label) == int(true_label)),
+            }
+        )
+    return rows
+
+
+def write_classification_feedback_outputs(
+    *,
+    metric_rows: list[dict[str, object]],
+    prediction_rows: list[dict[str, object]],
+    output_dir: str,
+    result_prefix: str,
+):
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    metric_df = pd.DataFrame(metric_rows).sort_values(by=["seed"]).reset_index(drop=True)
+    metric_path = output_path / f"{result_prefix}_classification_metrics_per_seed.csv"
+    metric_df.to_csv(metric_path, index=False)
+
+    split_order = {"train": 0, "valid": 1, "test": 2}
+    prediction_df = pd.DataFrame(prediction_rows)
+    prediction_df["_split_order"] = prediction_df["split"].map(split_order).fillna(99)
+    prediction_df = prediction_df.sort_values(
+        by=["seed", "_split_order", "sample_index"],
+    ).drop(columns=["_split_order"]).reset_index(drop=True)
+    prediction_path = output_path / f"{result_prefix}_sample_predictions.csv"
+    prediction_df.to_csv(prediction_path, index=False)
+
+    return metric_path, prediction_path
+
+
 def evaluation(feature_backend, feature_source_map=None, generated_code=None, function_names=None):
     train_smiles, y_train, train_split = load_data('train')
     valid_smiles, y_valid, valid_split = load_data('valid')
@@ -520,6 +626,8 @@ def evaluation(feature_backend, feature_source_map=None, generated_code=None, fu
 
     if is_classification:
 
+        classification_metric_rows = []
+        sample_prediction_rows = []
         average_roc_auc_test = []
         average_roc_auc_valid = []
         average_macro_f1_test = []
@@ -528,13 +636,17 @@ def evaluation(feature_backend, feature_source_map=None, generated_code=None, fu
         for seed in seeds:
             clf = build_estimator(seed=seed, is_classification=True)
             clf.fit(X_train, y_train)
+            y_train_proba = clf.predict_proba(X_train)
             y_valid_proba = clf.predict_proba(X_valid)[:, 1]
             y_test_proba = clf.predict_proba(X_test)[:, 1]
+            y_train_pred = clf.predict(X_train)
             y_valid_pred = clf.predict(X_valid)
             y_test_pred = clf.predict(X_test)
 
+            train_roc_auc = roc_auc_score(y_train, y_train_proba[:, 1])
             valid_roc_auc = roc_auc_score(y_valid, y_valid_proba)
             test_roc_auc = roc_auc_score(y_test, y_test_proba)
+            train_macro_f1 = compute_macro_f1(y_train, y_train_pred)
             valid_macro_f1 = compute_macro_f1(y_valid, y_valid_pred)
             test_macro_f1 = compute_macro_f1(y_test, y_test_pred)
 
@@ -552,6 +664,8 @@ def evaluation(feature_backend, feature_source_map=None, generated_code=None, fu
                     valid_metric_name='valid_macro_f1',
                     valid_metric_value=valid_macro_f1,
                     test_metrics={
+                        'train_roc_auc': train_roc_auc,
+                        'train_macro_f1': train_macro_f1,
                         'valid_roc_auc': valid_roc_auc,
                         'test_roc_auc': test_roc_auc,
                         'test_macro_f1': test_macro_f1,
@@ -572,6 +686,58 @@ def evaluation(feature_backend, feature_source_map=None, generated_code=None, fu
                     seed=seed,
                     default_source=default_importance_source,
                     source_map=feature_source_map,
+                )
+            )
+            classification_metric_rows.append(
+                build_classification_metric_row(
+                    seed=seed,
+                    bundle_path=bundle_path,
+                    train_macro_f1=train_macro_f1,
+                    train_roc_auc=train_roc_auc,
+                    valid_macro_f1=valid_macro_f1,
+                    valid_roc_auc=valid_roc_auc,
+                    test_macro_f1=test_macro_f1,
+                    test_roc_auc=test_roc_auc,
+                    test_resolved_split=test_split,
+                )
+            )
+            sample_prediction_rows.extend(
+                build_classification_prediction_rows(
+                    seed=seed,
+                    bundle_path=bundle_path,
+                    split_label='train',
+                    resolved_split=train_split,
+                    smiles_list=train_smiles,
+                    y_true=y_train,
+                    y_pred=y_train_pred,
+                    y_proba=y_train_proba,
+                    model_classes=clf.classes_,
+                )
+            )
+            sample_prediction_rows.extend(
+                build_classification_prediction_rows(
+                    seed=seed,
+                    bundle_path=bundle_path,
+                    split_label='valid',
+                    resolved_split=valid_split,
+                    smiles_list=valid_smiles,
+                    y_true=y_valid,
+                    y_pred=y_valid_pred,
+                    y_proba=clf.predict_proba(X_valid),
+                    model_classes=clf.classes_,
+                )
+            )
+            sample_prediction_rows.extend(
+                build_classification_prediction_rows(
+                    seed=seed,
+                    bundle_path=bundle_path,
+                    split_label='test',
+                    resolved_split=test_split,
+                    smiles_list=test_smiles,
+                    y_true=y_test,
+                    y_pred=y_test_pred,
+                    y_proba=clf.predict_proba(X_test),
+                    model_classes=clf.classes_,
                 )
             )
 
@@ -610,6 +776,15 @@ def evaluation(feature_backend, feature_source_map=None, generated_code=None, fu
                 f.write("%s\n" % item)
             f.write(f"\n\nAverage test macro F1: {np.mean(average_macro_f1_test)} \n")
             f.write(f"Standard deviation of test macro F1: {np.std(average_macro_f1_test)}")
+
+        classification_metrics_path, sample_predictions_path = write_classification_feedback_outputs(
+            metric_rows=classification_metric_rows,
+            prediction_rows=sample_prediction_rows,
+            output_dir=result_folder,
+            result_prefix=get_result_prefix(subtask_name),
+        )
+        print(f"Saved per-seed classification metrics to {classification_metrics_path}")
+        print(f"Saved per-sample predictions to {sample_predictions_path}")
     elif args.dataset in ['esol', 'lipophilicity', 'freesolv']:
         rmse_test_list = []
         rmse_valid_list = []

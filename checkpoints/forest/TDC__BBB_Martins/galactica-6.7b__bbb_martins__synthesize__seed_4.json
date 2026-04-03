@@ -103,6 +103,8 @@
     "selection_metric_value": 0.7483870967741935,
     "selection_higher_is_better": true,
     "valid_macro_f1": 0.7483870967741935,
+    "train_roc_auc": 0.9650088666324642,
+    "train_macro_f1": 0.873119230585905,
     "valid_roc_auc": 0.8662551440329218,
     "test_roc_auc": 0.8662551440329218,
     "test_macro_f1": 0.7483870967741935

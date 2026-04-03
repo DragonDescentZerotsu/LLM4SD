@@ -70,11 +70,13 @@
   ],
   "metrics": {
     "selection_metric_name": "valid_macro_f1",
-    "selection_metric_value": 0.7632602904021786,
+    "selection_metric_value": 0.7575898781962427,
     "selection_higher_is_better": true,
-    "valid_macro_f1": 0.7632602904021786,
-    "valid_roc_auc": 0.8374394436630723,
-    "test_roc_auc": 0.8374394436630723,
-    "test_macro_f1": 0.7632602904021786
+    "valid_macro_f1": 0.7575898781962427,
+    "train_roc_auc": 0.9730366545034097,
+    "train_macro_f1": 0.9066785352900046,
+    "valid_roc_auc": 0.8399867166744803,
+    "test_roc_auc": 0.8399867166744803,
+    "test_macro_f1": 0.7575898781962427
   }
 }
