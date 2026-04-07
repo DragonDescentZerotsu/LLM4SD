@@ -2,33 +2,30 @@
   "subtask": "Bioavailability_Ma",
   "feature_backend": "bioavailability_ma",
   "selection_metric": "macro_f1",
+  "selection_mode": "train_cv_5fold",
   "search_seed": 0,
   "eval_seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    0
   ],
   "best_params": {
-    "n_estimators": 200,
-    "max_depth": 10,
-    "min_samples_split": 2,
-    "min_samples_leaf": 10,
-    "bootstrap": true,
+    "n_estimators": 400,
+    "max_depth": null,
+    "min_samples_split": 20,
+    "min_samples_leaf": 1,
+    "bootstrap": false,
     "criterion": "gini",
-    "max_features": null,
-    "class_weight": "balanced_subsample"
+    "max_features": "log2",
+    "class_weight": "balanced"
   },
   "best_metrics": {
-    "mean_train_roc_auc": 0.9556741949910554,
-    "std_train_roc_auc": 0.0026363298492966423,
-    "mean_valid_roc_auc": 0.7266968325791855,
-    "std_valid_roc_auc": 0.0033591338538944203,
-    "mean_train_macro_f1": 0.8369051247703801,
-    "std_train_macro_f1": 0.007887332364374505,
-    "mean_valid_macro_f1": 0.6835775571286048,
-    "std_valid_macro_f1": 0.010758598553496684
+    "mean_train_roc_auc": 0.9966421258155151,
+    "std_train_roc_auc": 0.0018906994420710423,
+    "mean_valid_roc_auc": 0.7296151504079893,
+    "std_valid_roc_auc": 0.03745475027725802,
+    "mean_train_macro_f1": 0.9384953477906915,
+    "std_train_macro_f1": 0.013507762251347996,
+    "mean_valid_macro_f1": 0.6369522149116668,
+    "std_valid_macro_f1": 0.0414788649354558
   },
   "num_surviving_features": 83,
   "surviving_feature_names": [
@@ -115,5 +112,17 @@
     "crystal_packing_risk_proxy",
     "oral_bioavailability_rule_pass_count",
     "oral_bioavailability_screen_pass"
-  ]
+  ],
+  "cv_num_folds": 5,
+  "final_eval_seed": 0,
+  "final_model_metrics": {
+    "train": {
+      "roc_auc": 0.9958072450805008,
+      "macro_f1": 0.9411702909969535
+    },
+    "valid": {
+      "roc_auc": 0.7164404223227752,
+      "macro_f1": 0.6381775856335218
+    }
+  }
 }

@@ -2,18 +2,15 @@
   "subtask": "SARSCoV2_Vitro_Touret",
   "feature_backend": "sarscov2_vitro_touret",
   "selection_metric": "macro_f1",
+  "selection_mode": "train_cv_5fold",
   "search_seed": 0,
   "eval_seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    0
   ],
   "best_params": {
-    "n_estimators": 200,
-    "max_depth": 4,
-    "min_samples_split": 100,
+    "n_estimators": 700,
+    "max_depth": 10,
+    "min_samples_split": 50,
     "min_samples_leaf": 1,
     "bootstrap": true,
     "criterion": "entropy",
@@ -21,14 +18,14 @@
     "class_weight": "balanced"
   },
   "best_metrics": {
-    "mean_train_roc_auc": 0.8860900658500318,
-    "std_train_roc_auc": 0.004606300687175389,
-    "mean_valid_roc_auc": 0.7865808823529412,
-    "std_valid_roc_auc": 0.011153980640179173,
-    "mean_train_macro_f1": 0.6140872619215634,
-    "std_train_macro_f1": 0.010208234274570686,
-    "mean_valid_macro_f1": 0.6607773001205169,
-    "std_valid_macro_f1": 0.01248956059425518
+    "mean_train_roc_auc": 0.975799155002209,
+    "std_train_roc_auc": 0.005304311933857059,
+    "mean_valid_roc_auc": 0.6594211744727209,
+    "std_valid_roc_auc": 0.08193506886876142,
+    "mean_train_macro_f1": 0.7912402585685427,
+    "std_train_macro_f1": 0.03409633946896146,
+    "mean_valid_macro_f1": 0.562385317559055,
+    "std_valid_macro_f1": 0.03993738392840624
   },
   "num_surviving_features": 84,
   "surviving_feature_names": [
@@ -116,5 +113,17 @@
     "ionization_window_pass",
     "liability_alert_absent_pass",
     "sarscov2_vitro_design_rule_pass_count"
-  ]
+  ],
+  "cv_num_folds": 5,
+  "final_eval_seed": 0,
+  "final_model_metrics": {
+    "train": {
+      "roc_auc": 0.9715711959215464,
+      "macro_f1": 0.7894879989120827
+    },
+    "valid": {
+      "roc_auc": 0.7858455882352942,
+      "macro_f1": 0.5992992514731645
+    }
+  }
 }

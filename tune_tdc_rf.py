@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score, roc_auc_score
-from sklearn.model_selection import ParameterSampler
+from sklearn.model_selection import ParameterSampler, StratifiedKFold
 
 from feature_backends import load_feature_backend, prepare_feature_matrices
 
@@ -73,6 +73,15 @@ def parse_args():
     parser.add_argument('--eval_seeds', type=str, default='0,1,2,3,4', help='comma-separated RF random seeds used for scoring each candidate')
     parser.add_argument('--output_dir', type=str, default='eval_result/TDC_hyperparameter_search', help='directory to save search results')
     parser.add_argument('--selection_metric', choices=['macro_f1', 'roc_auc'], default='macro_f1', help='metric used to choose the best hyperparameter set')
+    parser.add_argument(
+        '--selection_mode',
+        choices=['valid', 'train_cv_5fold'],
+        default='valid',
+        help=(
+            "how to choose hyperparameters: 'valid' keeps the current train->valid selection flow; "
+            "'train_cv_5fold' tunes only on train with 5-fold CV, then retrains on full train and reports valid"
+        ),
+    )
     return parser.parse_args()
 
 
@@ -206,6 +215,12 @@ def compute_macro_f1(y_true, y_pred):
     return f1_score(y_true, y_pred, average='macro')
 
 
+def compute_roc_auc(y_true, y_score):
+    if len(set(y_true)) <= 1:
+        return math.nan
+    return roc_auc_score(y_true, y_score)
+
+
 def evaluate_candidate(params, X_train, y_train, X_valid, y_valid, seeds: list[int], rf_jobs: int):
     valid_roc_auc_scores = []
     train_roc_auc_scores = []
@@ -222,20 +237,110 @@ def evaluate_candidate(params, X_train, y_train, X_valid, y_valid, seeds: list[i
         valid_proba = model.predict_proba(X_valid)[:, 1]
         train_pred = model.predict(X_train)
         valid_pred = model.predict(X_valid)
-        train_roc_auc_scores.append(roc_auc_score(y_train, train_proba))
-        valid_roc_auc_scores.append(roc_auc_score(y_valid, valid_proba))
+        train_roc_auc_scores.append(compute_roc_auc(y_train, train_proba))
+        valid_roc_auc_scores.append(compute_roc_auc(y_valid, valid_proba))
         train_macro_f1_scores.append(compute_macro_f1(y_train, train_pred))
         valid_macro_f1_scores.append(compute_macro_f1(y_valid, valid_pred))
     return {
-        'mean_train_roc_auc': float(np.mean(train_roc_auc_scores)),
-        'std_train_roc_auc': float(np.std(train_roc_auc_scores)),
-        'mean_valid_roc_auc': float(np.mean(valid_roc_auc_scores)),
-        'std_valid_roc_auc': float(np.std(valid_roc_auc_scores)),
-        'mean_train_macro_f1': float(np.mean(train_macro_f1_scores)),
-        'std_train_macro_f1': float(np.std(train_macro_f1_scores)),
-        'mean_valid_macro_f1': float(np.mean(valid_macro_f1_scores)),
-        'std_valid_macro_f1': float(np.std(valid_macro_f1_scores)),
+        'mean_train_roc_auc': float(np.nanmean(train_roc_auc_scores)),
+        'std_train_roc_auc': float(np.nanstd(train_roc_auc_scores)),
+        'mean_valid_roc_auc': float(np.nanmean(valid_roc_auc_scores)),
+        'std_valid_roc_auc': float(np.nanstd(valid_roc_auc_scores)),
+        'mean_train_macro_f1': float(np.nanmean(train_macro_f1_scores)),
+        'std_train_macro_f1': float(np.nanstd(train_macro_f1_scores)),
+        'mean_valid_macro_f1': float(np.nanmean(valid_macro_f1_scores)),
+        'std_valid_macro_f1': float(np.nanstd(valid_macro_f1_scores)),
     }
+
+
+def evaluate_candidate_with_train_cv(
+    params,
+    train_feature_frame: pd.DataFrame,
+    y_train,
+    *,
+    seeds: list[int],
+    rf_jobs: int,
+    scale_features: bool,
+    cv_n_splits: int,
+    cv_seed: int,
+):
+    y_train_array = np.asarray(y_train, dtype=int)
+    unique_labels, label_counts = np.unique(y_train_array, return_counts=True)
+    if len(unique_labels) < 2:
+        raise ValueError('train_cv_5fold requires at least two classes in the train split')
+
+    min_class_count = int(label_counts.min())
+    if min_class_count < cv_n_splits:
+        raise ValueError(
+            f"Cannot run {cv_n_splits}-fold CV because the smallest class in train has only "
+            f"{min_class_count} samples."
+        )
+
+    splitter = StratifiedKFold(
+        n_splits=cv_n_splits,
+        shuffle=True,
+        random_state=cv_seed,
+    )
+
+    valid_roc_auc_scores = []
+    train_roc_auc_scores = []
+    valid_macro_f1_scores = []
+    train_macro_f1_scores = []
+
+    for fold_train_idx, fold_valid_idx in splitter.split(train_feature_frame, y_train_array):
+        fold_train_df = train_feature_frame.iloc[fold_train_idx]
+        fold_valid_df = train_feature_frame.iloc[fold_valid_idx]
+        x_fold_train, x_fold_valid, _, _ = prepare_feature_matrices(
+            fold_train_df,
+            fold_valid_df,
+            fold_valid_df,
+            scale_features=scale_features,
+        )
+        y_fold_train = y_train_array[fold_train_idx]
+        y_fold_valid = y_train_array[fold_valid_idx]
+
+        for seed in seeds:
+            model = RandomForestClassifier(
+                **params,
+                random_state=seed,
+                n_jobs=rf_jobs,
+            )
+            model.fit(x_fold_train, y_fold_train)
+
+            train_proba = model.predict_proba(x_fold_train)[:, 1]
+            valid_proba = model.predict_proba(x_fold_valid)[:, 1]
+            train_pred = model.predict(x_fold_train)
+            valid_pred = model.predict(x_fold_valid)
+
+            train_roc_auc_scores.append(compute_roc_auc(y_fold_train, train_proba))
+            valid_roc_auc_scores.append(compute_roc_auc(y_fold_valid, valid_proba))
+            train_macro_f1_scores.append(compute_macro_f1(y_fold_train, train_pred))
+            valid_macro_f1_scores.append(compute_macro_f1(y_fold_valid, valid_pred))
+
+    return {
+        'mean_train_roc_auc': float(np.nanmean(train_roc_auc_scores)),
+        'std_train_roc_auc': float(np.nanstd(train_roc_auc_scores)),
+        'mean_valid_roc_auc': float(np.nanmean(valid_roc_auc_scores)),
+        'std_valid_roc_auc': float(np.nanstd(valid_roc_auc_scores)),
+        'mean_train_macro_f1': float(np.nanmean(train_macro_f1_scores)),
+        'std_train_macro_f1': float(np.nanstd(train_macro_f1_scores)),
+        'mean_valid_macro_f1': float(np.nanmean(valid_macro_f1_scores)),
+        'std_valid_macro_f1': float(np.nanstd(valid_macro_f1_scores)),
+    }
+
+
+def extract_best_params(record):
+    keys = [
+        'n_estimators',
+        'max_depth',
+        'min_samples_split',
+        'min_samples_leaf',
+        'bootstrap',
+        'criterion',
+        'max_features',
+        'class_weight',
+    ]
+    return {key: record[key] for key in keys}
 
 
 def main():
@@ -265,11 +370,12 @@ def main():
         args.force_recompute_features,
     )
 
+    scale_features = True
     X_train, X_valid, _, surviving_columns = prepare_feature_matrices(
         train_df,
         valid_df,
         valid_df,
-        scale_features=True,
+        scale_features=scale_features,
     )
     print(f'Using {len(surviving_columns)} surviving features for tuning')
 
@@ -280,7 +386,19 @@ def main():
     selection_std_key = f'std_valid_{args.selection_metric}'
 
     for index, params in enumerate(tqdm(candidate_params, total=len(candidate_params), desc='RF tuning'), start=1):
-        metrics = evaluate_candidate(params, X_train, y_train, X_valid, y_valid, eval_seeds, args.rf_jobs)
+        if args.selection_mode == 'train_cv_5fold':
+            metrics = evaluate_candidate_with_train_cv(
+                params,
+                train_df,
+                y_train,
+                seeds=eval_seeds,
+                rf_jobs=args.rf_jobs,
+                scale_features=scale_features,
+                cv_n_splits=5,
+                cv_seed=args.search_seed,
+            )
+        else:
+            metrics = evaluate_candidate(params, X_train, y_train, X_valid, y_valid, eval_seeds, args.rf_jobs)
         record = {
             'candidate_index': index,
             **params,
@@ -296,9 +414,10 @@ def main():
             )
         ):
             best_record = record
+            selection_label = 'cv' if args.selection_mode == 'train_cv_5fold' else 'valid'
             print(
                 f"New best candidate #{index}: "
-                f"valid {args.selection_metric}={record[selection_mean_key]:.6f} +/- {record[selection_std_key]:.6f}"
+                f"{selection_label} {args.selection_metric}={record[selection_mean_key]:.6f} +/- {record[selection_std_key]:.6f}"
             )
 
     output_dir = Path(args.output_dir) / args.subtask
@@ -311,14 +430,37 @@ def main():
     results_csv = output_dir / f'{args.subtask}_{args.feature_backend}_rf_search_results.csv'
     results_df.to_csv(results_csv, index=False)
 
-    best_params = {
-        key: best_record[key]
-        for key in ['n_estimators', 'max_depth', 'min_samples_split', 'min_samples_leaf', 'bootstrap', 'criterion', 'max_features', 'class_weight']
-    }
+    best_params = extract_best_params(best_record)
+    final_model_metrics = None
+    final_eval_seed = None
+    if args.selection_mode == 'train_cv_5fold':
+        final_eval_seed = eval_seeds[0]
+        final_model = RandomForestClassifier(
+            **best_params,
+            random_state=final_eval_seed,
+            n_jobs=args.rf_jobs,
+        )
+        final_model.fit(X_train, y_train)
+        train_proba = final_model.predict_proba(X_train)[:, 1]
+        valid_proba = final_model.predict_proba(X_valid)[:, 1]
+        train_pred = final_model.predict(X_train)
+        valid_pred = final_model.predict(X_valid)
+        final_model_metrics = {
+            'train': {
+                'roc_auc': compute_roc_auc(y_train, train_proba),
+                'macro_f1': compute_macro_f1(y_train, train_pred),
+            },
+            'valid': {
+                'roc_auc': compute_roc_auc(y_valid, valid_proba),
+                'macro_f1': compute_macro_f1(y_valid, valid_pred),
+            },
+        }
+
     best_output = {
         'subtask': args.subtask,
         'feature_backend': args.feature_backend,
         'selection_metric': args.selection_metric,
+        'selection_mode': args.selection_mode,
         'search_seed': args.search_seed,
         'eval_seeds': eval_seeds,
         'best_params': best_params,
@@ -335,6 +477,11 @@ def main():
         'num_surviving_features': len(surviving_columns),
         'surviving_feature_names': surviving_columns,
     }
+    if args.selection_mode == 'train_cv_5fold':
+        best_output['cv_num_folds'] = 5
+    if final_model_metrics is not None:
+        best_output['final_eval_seed'] = final_eval_seed
+        best_output['final_model_metrics'] = final_model_metrics
     best_json = output_dir / f'{args.subtask}_{args.feature_backend}_best_params.json'
     with best_json.open('w', encoding='utf-8') as f:
         json.dump(best_output, f, indent=2, ensure_ascii=False)
@@ -343,10 +490,16 @@ def main():
     print(f'Saved best-parameter summary to {best_json}')
     print('Best params:')
     print(json.dumps(best_params, indent=2, ensure_ascii=False))
+    selection_label = 'cv' if args.selection_mode == 'train_cv_5fold' else 'valid'
     print(
-        f"Best valid {args.selection_metric}: {best_record[selection_mean_key]:.6f} "
+        f"Best {selection_label} {args.selection_metric}: {best_record[selection_mean_key]:.6f} "
         f"+/- {best_record[selection_std_key]:.6f}"
     )
+    if final_model_metrics is not None:
+        print(
+            f"Final valid {args.selection_metric}: "
+            f"{final_model_metrics['valid'][args.selection_metric]:.6f}"
+        )
 
 
 if __name__ == '__main__':

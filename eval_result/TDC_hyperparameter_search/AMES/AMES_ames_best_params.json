@@ -2,33 +2,30 @@
   "subtask": "AMES",
   "feature_backend": "ames",
   "selection_metric": "macro_f1",
+  "selection_mode": "train_cv_5fold",
   "search_seed": 0,
   "eval_seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    0
   ],
   "best_params": {
-    "n_estimators": 200,
+    "n_estimators": 100,
     "max_depth": 40,
-    "min_samples_split": 5,
-    "min_samples_leaf": 3,
-    "bootstrap": true,
+    "min_samples_split": 2,
+    "min_samples_leaf": 1,
+    "bootstrap": false,
     "criterion": "entropy",
     "max_features": "log2",
     "class_weight": "balanced"
   },
   "best_metrics": {
-    "mean_train_roc_auc": 0.97252878154003,
-    "std_train_roc_auc": 0.0003010516177416489,
-    "mean_valid_roc_auc": 0.8381192373808407,
-    "std_valid_roc_auc": 0.001353773090569542,
-    "mean_train_macro_f1": 0.9050378379141121,
-    "std_train_macro_f1": 0.0010870492534175357,
-    "mean_valid_macro_f1": 0.7629147401538426,
-    "std_valid_macro_f1": 0.00563285238540903
+    "mean_train_roc_auc": 0.9989153963976601,
+    "std_train_roc_auc": 5.8664832311703424e-05,
+    "mean_valid_roc_auc": 0.8685712226290585,
+    "std_valid_roc_auc": 0.009275603514743061,
+    "mean_train_macro_f1": 0.9790814981213336,
+    "std_train_macro_f1": 0.0006677460168298502,
+    "mean_valid_macro_f1": 0.8074959853187167,
+    "std_valid_macro_f1": 0.006157569346834501
   },
   "num_surviving_features": 55,
   "surviving_feature_names": [
@@ -87,5 +84,17 @@
     "reactive_alert_family_count",
     "ames_alert_family_count",
     "ames_structural_alert_present"
-  ]
+  ],
+  "cv_num_folds": 5,
+  "final_eval_seed": 0,
+  "final_model_metrics": {
+    "train": {
+      "roc_auc": 0.9986161705010972,
+      "macro_f1": 0.9767109484854841
+    },
+    "valid": {
+      "roc_auc": 0.8229996874511643,
+      "macro_f1": 0.761191367932941
+    }
+  }
 }

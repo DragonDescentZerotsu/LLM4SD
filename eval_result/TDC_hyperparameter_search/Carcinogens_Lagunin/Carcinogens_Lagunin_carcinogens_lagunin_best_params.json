@@ -2,33 +2,30 @@
   "subtask": "Carcinogens_Lagunin",
   "feature_backend": "carcinogens_lagunin",
   "selection_metric": "macro_f1",
+  "selection_mode": "train_cv_5fold",
   "search_seed": 0,
   "eval_seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    0
   ],
   "best_params": {
-    "n_estimators": 150,
-    "max_depth": null,
-    "min_samples_split": 10,
+    "n_estimators": 100,
+    "max_depth": 30,
+    "min_samples_split": 5,
     "min_samples_leaf": 3,
     "bootstrap": false,
     "criterion": "gini",
     "max_features": "log2",
-    "class_weight": null
+    "class_weight": "balanced_subsample"
   },
   "best_metrics": {
-    "mean_train_roc_auc": 0.9974434005852457,
-    "std_train_roc_auc": 0.00012320961034960608,
-    "mean_valid_roc_auc": 0.8,
-    "std_valid_roc_auc": 0.014550609157114354,
-    "mean_train_macro_f1": 0.9370129870129871,
-    "std_train_macro_f1": 0.0,
-    "mean_valid_macro_f1": 0.8541666666666667,
-    "std_valid_macro_f1": 0.0
+    "mean_train_roc_auc": 0.9977345649003404,
+    "std_train_roc_auc": 0.0012281678307934274,
+    "mean_valid_roc_auc": 0.91276284348865,
+    "std_valid_roc_auc": 0.029009905796692128,
+    "mean_train_macro_f1": 0.9889676030549296,
+    "std_train_macro_f1": 0.008935701375351936,
+    "mean_valid_macro_f1": 0.8449383134809324,
+    "std_valid_macro_f1": 0.05285106420772469
   },
   "num_surviving_features": 81,
   "surviving_feature_names": [
@@ -113,5 +110,17 @@
     "low_tpsa_flag",
     "low_hbond_balance_flag",
     "high_aromatic_ring_burden_flag"
-  ]
+  ],
+  "cv_num_folds": 5,
+  "final_eval_seed": 0,
+  "final_model_metrics": {
+    "train": {
+      "roc_auc": 0.9975358077930078,
+      "macro_f1": 0.9853030303030303
+    },
+    "valid": {
+      "roc_auc": 0.7652173913043478,
+      "macro_f1": 0.7565217391304347
+    }
+  }
 }

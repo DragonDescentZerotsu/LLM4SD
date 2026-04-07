@@ -2,33 +2,30 @@
   "subtask": "HIA_Hou",
   "feature_backend": "hia_hou",
   "selection_metric": "macro_f1",
+  "selection_mode": "train_cv_5fold",
   "search_seed": 0,
   "eval_seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    0
   ],
   "best_params": {
-    "n_estimators": 200,
-    "max_depth": 10,
-    "min_samples_split": 2,
-    "min_samples_leaf": 10,
-    "bootstrap": true,
+    "n_estimators": 400,
+    "max_depth": null,
+    "min_samples_split": 20,
+    "min_samples_leaf": 1,
+    "bootstrap": false,
     "criterion": "gini",
     "max_features": "log2",
-    "class_weight": null
+    "class_weight": "balanced"
   },
   "best_metrics": {
-    "mean_train_roc_auc": 0.9676136363636365,
-    "std_train_roc_auc": 0.001269551714166625,
-    "mean_valid_roc_auc": 0.9617142857142855,
-    "std_valid_roc_auc": 0.002913725436338739,
-    "mean_train_macro_f1": 0.7516042244798682,
-    "std_train_macro_f1": 0.0022729670850013253,
-    "mean_valid_macro_f1": 0.8697638994668697,
-    "std_valid_macro_f1": 0.0
+    "mean_train_roc_auc": 0.9981646825396826,
+    "std_train_roc_auc": 0.0007735551067308659,
+    "mean_valid_roc_auc": 0.9323688271604939,
+    "std_valid_roc_auc": 0.04564674212560968,
+    "mean_train_macro_f1": 0.9011806708665615,
+    "std_train_macro_f1": 0.008353610786183482,
+    "mean_valid_macro_f1": 0.846383836033565,
+    "std_valid_macro_f1": 0.04915915775100741
   },
   "num_surviving_features": 65,
   "surviving_feature_names": [
@@ -97,5 +94,17 @@
     "unionized_across_intestinal_ph",
     "hia_primary_rule_pass_count",
     "hia_strict_absorption_screen"
-  ]
+  ],
+  "cv_num_folds": 5,
+  "final_eval_seed": 0,
+  "final_model_metrics": {
+    "train": {
+      "roc_auc": 0.9977272727272727,
+      "macro_f1": 0.916546168147077
+    },
+    "valid": {
+      "roc_auc": 0.9428571428571427,
+      "macro_f1": 0.7580351728320194
+    }
+  }
 }

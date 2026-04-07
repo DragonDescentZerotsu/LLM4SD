@@ -2,33 +2,30 @@
   "subtask": "Skin_Reaction",
   "feature_backend": "skin_reaction",
   "selection_metric": "macro_f1",
+  "selection_mode": "train_cv_5fold",
   "search_seed": 0,
   "eval_seeds": [
-    0,
-    1,
-    2,
-    3,
-    4
+    0
   ],
   "best_params": {
-    "n_estimators": 100,
-    "max_depth": 8,
-    "min_samples_split": 20,
-    "min_samples_leaf": 4,
+    "n_estimators": 200,
+    "max_depth": 40,
+    "min_samples_split": 5,
+    "min_samples_leaf": 3,
     "bootstrap": true,
-    "criterion": "gini",
-    "max_features": null,
-    "class_weight": null
+    "criterion": "entropy",
+    "max_features": "log2",
+    "class_weight": "balanced"
   },
   "best_metrics": {
-    "mean_train_roc_auc": 0.9459676908457396,
-    "std_train_roc_auc": 0.00299949425413266,
-    "mean_valid_roc_auc": 0.7050505050505051,
-    "std_valid_roc_auc": 0.007213564069235196,
-    "mean_train_macro_f1": 0.8124368333619977,
-    "std_train_macro_f1": 0.008865311502051174,
-    "mean_valid_macro_f1": 0.7022336149313837,
-    "std_valid_macro_f1": 0.019926212681239196
+    "mean_train_roc_auc": 0.9809505230165998,
+    "std_train_roc_auc": 0.0034347466844563634,
+    "mean_valid_roc_auc": 0.7910162601626016,
+    "std_valid_roc_auc": 0.0544967406234679,
+    "mean_train_macro_f1": 0.9188842726221607,
+    "std_train_macro_f1": 0.015982995100994515,
+    "mean_valid_macro_f1": 0.7187841641446994,
+    "std_valid_macro_f1": 0.0399160975554596
   },
   "num_surviving_features": 88,
   "surviving_feature_names": [
@@ -120,5 +117,17 @@
     "high_polarity_low_uptake_flag",
     "estimated_log_kp_ge_minus3",
     "estimated_log_kp_ge_minus2p5"
-  ]
+  ],
+  "cv_num_folds": 5,
+  "final_eval_seed": 0,
+  "final_model_metrics": {
+    "train": {
+      "roc_auc": 0.976940133037694,
+      "macro_f1": 0.9032861507763297
+    },
+    "valid": {
+      "roc_auc": 0.6275252525252526,
+      "macro_f1": 0.5833333333333333
+    }
+  }
 }
